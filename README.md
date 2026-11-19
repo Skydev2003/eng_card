@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WordRun
 
-## Getting Started
+เกมฝึกศัพท์อังกฤษจากภาพ มีโหมดฝึกคนเดียวและห้องแข่งขัน 2–6 คน
 
-First, run the development server:
+- หนึ่งรอบมี 40 ข้อ ภายใน 180 วินาที เริ่มด้วยหัวใจ 3 ดวง โฮสต์เลือกหมวด ความยาก และหัวใจ 1–5 ดวงได้
+- ตอบถูกเริ่มที่ 100 แต้ม คำตอบถูกแต่ละครั้งในคอมโบเดียวกันเพิ่มโบนัสอีก 25 แต้มและเพิ่มความเร็ว ตอบผิดเสียหัวใจ 1 ดวงและรีเซ็ตคอมโบ
+- เมื่อหัวใจหมดจะตกรอบและดูอันดับต่อได้ รอบจบเมื่อทุกคนเล่นจบหรือตกรอบ หรือหมดเวลา ผู้รอดที่ได้คะแนนสูงสุดชนะ ถ้าแต้มเท่ากันให้ดูหัวใจและจำนวนข้อที่ตอบถูกตามลำดับ ถ้ายังเสมอให้ชนะร่วมกัน
+- ตอบถูกเพิ่มระยะ 100 เมตร ด่านเปลี่ยนเมื่อครบทุก 10 คำตอบถูก เริ่มจากป่า ผ่านลำน้ำและซากเมือง ไปถึงทุ่งแสงอาทิตย์
+- เลือกจิ้งจอก กระต่าย หรือลูกเจี๊ยบและปรับสีได้ก่อนหรือระหว่างเล่น ตัวเลือกจะจำไว้ในเบราว์เซอร์ และเพื่อนในห้องจะเห็นตัวละครที่เลือก
+- ตอบด้วยปุ่มบนหน้าจอหรือแป้น 1 และ 2
 
-```bash
+## รันในเครื่อง
+
+ใช้ Node.js 22.12 ขึ้นไป
+
+```sh
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+เปิด http://localhost:3000 โหมดฝึกใช้ได้โดยไม่ต้องมีฐานข้อมูล
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+สำหรับโหมดเพื่อน ให้คัดลอก `.env.example` เป็น `.env` แล้วกำหนดค่าเหล่านี้
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| ตัวแปร | ค่า |
+| --- | --- |
+| `DATABASE_URL` | Supabase Transaction pooler พอร์ต 6543 สำหรับแอป หรือ URL ของ PostgreSQL ในเครื่อง |
+| `DIRECT_URL` | Supabase Session pooler พอร์ต 5432 สำหรับ migration ใช้ URL เดียวกับ `DATABASE_URL` ได้เมื่อทดสอบกับ PostgreSQL ในเครื่อง |
+| `NEXT_PUBLIC_SUPABASE_URL` | URL ของ Supabase project |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Publishable key ของ Supabase |
+| `CRON_SECRET` | สตริงสุ่มสำหรับยืนยันคำขอจาก Vercel Cron |
 
-## Learn More
+```sh
+npm run db:deploy
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+เมื่อใช้ Supabase เปิดการเข้าถึง public channels ใน Realtime Settings สำหรับแอปนี้ ช่อง Broadcast ใช้หัวข้อแบบสุ่มและส่งเฉพาะสัญญาณว่าห้องเปลี่ยน เบราว์เซอร์ต้องใช้คุกกี้สมาชิกห้องจึงจะอ่านข้อมูลผ่าน API ได้ หากไม่ได้ตั้งค่า Realtime หรือเชื่อมต่อไม่ได้ เบราว์เซอร์จะดึงสถานะจาก API เป็นระยะ เปิดเบราว์เซอร์คนละโปรไฟล์หรือหน้าต่างปกติกับไม่ระบุตัวตนเพื่อทดลองสองผู้เล่นในเครื่องเดียว
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy บน Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. รัน `npm run db:deploy` กับ Supabase ที่จะใช้งานจริง
+2. นำเข้า repo เป็นโครงการ Next.js ใน Vercel ใช้ Node.js 22 หรือ 24 และเพิ่ม environment variables สำหรับ Production
+3. เมื่อ Deploy แล้ว ทดสอบสร้างห้องจากสองเบราว์เซอร์ และตรวจสถานะ Cron ใน Vercel
 
-## Deploy on Vercel
+Vercel Cron เรียก endpoint ตรวจฐานข้อมูลวันละครั้งเวลา 04:00 UTC หรือ 11:00 น. เวลาไทย เวลารันอาจคลาดเคลื่อนบน Hobby ใช้ดูว่าฐานข้อมูลตอบได้ และอาจช่วยให้มีการใช้งาน แต่ไม่สามารถรับประกันว่า Supabase Free จะไม่ถูกพัก หากฐานข้อมูลใช้ไม่ได้ โหมดฝึกคนเดียวยังเปิดได้จากเว็บ ดู [นโยบายการพักโครงการ Supabase](https://supabase.com/docs/guides/platform/free-project-pausing) และ [ข้อจำกัด Vercel Cron](https://vercel.com/docs/cron-jobs/usage-and-pricing)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## โครงสร้าง
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/app` · หน้าเว็บ การตั้งค่า layout และ API
+- `src/features` · หน้าจอเกม ล็อบบี้ Zustand สำหรับโหมดเดี่ยว และตัวซิงก์สถานะห้อง
+- `src/game` · กติกา คลังคำศัพท์ และรูปแบบข้อมูลร่วมกัน
+- `src/server` · Prisma และตรรกะห้อง ตัวเกมใช้ transaction ล็อกห้องก่อนแก้ไข และตรวจรหัสรอบกับเลขข้อก่อนให้คะแนน
+- `prisma` · Schema และ migration PostgreSQL
+- `public/art` · ฉาก ซอมบี้ นักวิ่ง และภาพคำศัพท์ ภาพทั้งหมดสร้างด้วย OpenAI ImageGen สำหรับเกมนี้
+
+ตรวจด้วย `npm test`, `npm run lint` และ `npm run build`

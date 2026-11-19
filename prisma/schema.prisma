@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Room {
+  code      String   @id @db.VarChar(6)
+  topic     String   @unique
+  version   Int      @default(1)
+  state     Json
+  expiresAt DateTime
+
+  @@index([expiresAt])
+  @@map("game_rooms")
+}
