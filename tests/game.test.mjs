@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { buildDeck, ROUND_SIZE, initialStats, grade, compareScores } from '../src/game/rules.ts';
@@ -11,6 +11,7 @@ test('each category and difficulty can deliver a full deck of unambiguous questi
       for (const [index, q] of deck.entries()) {
         assert.equal(new Set(q.options).size, 2);
         assert.ok(q.image.startsWith('/art/words/'));
+        assert.ok(!Object.hasOwn(q, 'prompt'));
         assert.notEqual(q.image, deck[index - 1]?.image);
       }
     }
@@ -63,7 +64,7 @@ test('the expanded catalog has distinct artwork and meaningful difficulty pools'
   const easy = wordsFor('all', 'easy');
   const hard = wordsFor('all', 'hard');
   assert.ok(easy.every((entry) => entry.tier === 1));
-  assert.ok(hard.every((entry) => entry.tier >= 2));
+  assert.ok(hard.every((entry) => entry.tier >= 2 || entry.topic));
   assert.ok(easy.length >= 30 && hard.length >= 40);
   assert.ok(distractorsFor(vocabulary.find((entry) => entry.word === 'Cucumber'), 'hard')
     .some((entry) => entry.word === 'Zucchini'));
@@ -113,4 +114,36 @@ test('only a lobby with guests, all of them ready, can start', async () => {
     { ready: 1, total: 1, canStart: true });
   assert.equal(guestReadiness([host, { ...guest, ready: true, left: true }], host.id).canStart, false);
   assert.equal(availableRunnerName([{ name: 'นักวิ่ง 1' }, { name: 'นักวิ่ง 3' }]), 'นักวิ่ง 2');
+});
+
+test('new Oxford picture cards are unique and hard decks always use a close picture distractor', async () => {
+  const { oxfordPictures } = await import('../src/game/oxford-pictures.ts');
+  const { vocabulary, WORD_COUNT, closePictureOptions, wordsFor } = await import('../src/game/vocabulary.ts');
+  const { publicQuestion } = await import('../src/game/rules.ts');
+  assert.ok(oxfordPictures.length >= 500);
+  assert.equal(WORD_COUNT, 105 + oxfordPictures.length);
+  assert.equal(new Set(vocabulary.map(({ word }) => word.toLowerCase())).size, WORD_COUNT);
+  const normal = new Set(wordsFor('all', 'normal'));
+  const hard = new Set(wordsFor('all', 'hard').filter(word => closePictureOptions(word).length > 0));
+  for (const word of vocabulary.filter(word => word.topic)) {
+    assert.ok(normal.has(word) || hard.has(word), `${word.word} must appear in at least one deck`);
+  }
+  const credits = readFileSync(new URL('../public/art/words/oxford/credits.txt', import.meta.url), 'utf8');
+  const credited = new Set([...credits.matchAll(/^(\d+) (?:\||\S)/gm)].map(match => match[1]));
+  for (const [, , word, , id] of oxfordPictures) {
+    assert.ok(credited.has(id), `${word} is missing an image credit or provenance entry`);
+  }
+  for (const [first, second] of [['Lorry', 'Truck'], ['Singer', 'Musician'], ['Across', 'Through']]) {
+    assert.ok(!closePictureOptions(vocabulary.find(word => word.word === first)).some(word => word.word === second));
+  }
+  for (const category of ['all', 'people', 'animals', 'objects', 'places', 'food']) {
+    const deck = buildDeck({ category, difficulty: 'hard', hearts: 3 });
+    assert.ok(deck.some(question => question.image.includes('/oxford/')));
+    for (const question of deck) {
+      const entry = vocabulary.find(item => item.image === question.image);
+      assert.ok(entry && (category === 'all' || entry.group === category));
+      assert.ok(closePictureOptions(entry).some(item => item.word === question.options[1 - question.correct]));
+      assert.deepEqual(publicQuestion(question), { image: entry.image, options: question.options });
+    }
+  }
 });

@@ -29,6 +29,7 @@ function GameHelp({ dialog }: { dialog: React.RefObject<HTMLDialogElement | null
       <li><Zap /><div><strong>ต่อคอมโบ</strong><p>ตอบถูกติดกันได้แต้มเพิ่ม และทุก 10 คำตอบถูกจะเปลี่ยนฉาก</p></div></li>
       <li><Heart /><div><strong>รักษาหัวใจ</strong><p>หัวใจหมดจะตกรอบ ผู้รอดที่ได้แต้มมากที่สุดชนะ</p></div></li>
     </ul>
+    <a className="art-credits" href="/art/words/oxford/credits.txt" target="_blank" rel="noreferrer">เครดิตภาพคำศัพท์</a>
   </dialog>;
 }
 

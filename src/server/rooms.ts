@@ -1,6 +1,6 @@
 import "server-only";
 import { createHash, randomBytes, randomInt, randomUUID } from "node:crypto";
-import { buildDeck, CAPACITY, categories, defaults, difficulties, grade, initialStats, MATCH_MS } from "@/game/rules";
+import { buildDeck, CAPACITY, categories, defaults, difficulties, grade, initialStats, MATCH_MS, publicQuestion } from "@/game/rules";
 import type { Question, Settings } from "@/game/rules";
 import type { Feedback, PublicPlayer, RoomView } from "@/game/room";
 import type { Prisma, Room } from "@/generated/prisma/client";
@@ -65,7 +65,7 @@ function view(room: Room, state: State, player: Player, now: number): RoomView {
     questionDeadline: question ? player.deadline : undefined,
     nextQuestionDeadline: phase === "playing" ? nextDeadline(state) : undefined,
     feedback: player.feedback, recentCorrect: state.recentCorrect, questionCount: state.deck.length || undefined,
-    question: question ? { image: question.image, options: question.options } : null,
+    question: question ? publicQuestion(question) : null,
     players: state.players.map(({ id, name, index, left, ready, avatar, score, hearts, streak, bestStreak, speed, correct }) =>
       ({ id, name, index, left, ready: ready ?? false, avatar, score, hearts, streak, bestStreak, speed, correct })),
   };

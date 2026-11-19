@@ -1,3 +1,5 @@
+import { oxfordPictures } from "./oxford-pictures.ts";
+
 const sets = {
   people: {
     original: ["Doctor", "Firefighter", "Chef", "Artist", "Astronaut"],
@@ -24,12 +26,12 @@ const sets = {
 export type WordGroup = keyof typeof sets;
 export type Difficulty = "easy" | "normal" | "hard";
 type Tier = 1 | 2 | 3;
-type Word = { group: WordGroup; word: string; tier: Tier; image: string };
+type Word = { group: WordGroup; word: string; tier: Tier; image: string; topic?: string };
 
 const commonLegacy = new Set(["Doctor", "Chef", "Cat", "Dog", "Umbrella", "Bicycle", "Castle", "Hospital", "Apple", "Banana", "Pizza", "Backpack"]);
 const specializedLegacy = new Set(["Lighthouse", "Windmill"]);
 
-export const vocabulary = Object.entries(sets).flatMap(([key, group], row): Word[] => {
+const illustratedWords = Object.entries(sets).flatMap(([key, group], row): Word[] => {
   const category = key as WordGroup;
   return [
     ...group.original.map((word, index): Word => ({
@@ -42,6 +44,14 @@ export const vocabulary = Object.entries(sets).flatMap(([key, group], row): Word
     })),
   ];
 });
+export const vocabulary: Word[] = [
+  ...illustratedWords,
+  ...oxfordPictures.map(([group, topic, word, level, id]): Word => ({
+    group, topic, word: word[0].toUpperCase() + word.slice(1),
+    tier: level === "A1" ? 1 : level === "A2" ? 2 : 3,
+    image: `/art/words/oxford/${id}.webp`,
+  })),
+];
 export const WORD_COUNT = vocabulary.length;
 const similar = [
   ["Doctor", "Nurse", "Dentist"], ["Farmer", "Gardener"], ["Trumpeter", "Violinist"],
@@ -54,22 +64,68 @@ const similar = [
   ["Airport", "Train station", "Harbor"], ["School", "Library", "Museum"],
   ["Cucumber", "Zucchini"], ["Blueberries", "Blackberries"], ["Pretzel", "Croissant", "Toast"],
   ["Watermelon", "Pomegranate"], ["Broccoli", "Artichoke"],
+  ["Pilot", "Astronaut"], ["Police officer", "Firefighter"], ["Artist", "Photographer"],
+  ["Bear", "Raccoon"], ["Giraffe", "Zebra"],
+  ["Camera", "Binoculars", "Telescope"], ["Chair", "Table"], ["Scissors", "Stapler"],
+  ["Park", "Zoo"], ["Bakery", "Market"], ["Park", "Greenhouse"],
+  ["Grapes", "Cherries", "Blueberries", "Blackberries"], ["Orange", "Pomegranate"], ["Carrot", "Broccoli"],
+  ["Catch", "Hold"], ["Office", "Library", "School"], ["Teacher", "Secretary", "Soldier"],
+  ["Breakfast", "Lunch", "Dinner"], ["Screen", "Printer", "Laptop"],
 ];
 
+const interchangeable = [
+  ["Lorry", "Truck"], ["Aircraft", "Plane"], ["Screen", "Television"], ["Singer", "Musician"],
+  ["Across", "Through"], ["Cupboard", "Drawer"], ["Salt", "Pepper"],
+  ["Street", "Road"], ["Railway", "Track"], ["Sea", "Ocean"], ["Apartment", "Flat"],
+  ["Harbor", "Harbour", "Port"], ["Ground", "Yard"], ["University", "College"],
+  ["Alarm", "Clock"], ["Baseball", "Ball"], ["Signal", "Sign"], ["Stair", "Step"],
+  ["Dirt", "Soil"], ["Drive", "Driving"], ["Cook", "Cooking"], ["Fly", "Flying"],
+];
+
+const wordsByLabel = new Map(vocabulary.map((word) => [word.word, word]));
+const pictureTopics = new Map<string, Word[]>();
+function topicKey(word: Word) { return `${word.group}/${word.topic}`; }
+for (const word of vocabulary) {
+  if (word.topic === undefined) continue;
+  const key = topicKey(word);
+  const topic = pictureTopics.get(key) ?? [];
+  topic.push(word);
+  pictureTopics.set(key, topic);
+}
+
+function areDistinct(a: Word, b: Word) {
+  return a.word !== b.word && !interchangeable.some((group) => group.includes(a.word) && group.includes(b.word));
+}
+
 export function wordsFor(category: WordGroup | "all", difficulty: Difficulty) {
-  return vocabulary.filter((word) => (category === "all" || word.group === category)
-    && (difficulty === "easy" ? word.tier === 1 : difficulty === "normal" ? word.tier <= 2 : word.tier >= 2));
+  return vocabulary.filter((word) => {
+    if (category !== "all" && word.group !== category) return false;
+    if (difficulty === "easy") return word.tier === 1;
+    if (difficulty === "hard") return word.tier >= 2 || word.topic !== undefined;
+    return word.tier <= 2 || (word.topic !== undefined && closePictureOptions(word).length === 0);
+  });
+}
+
+export function closePictureOptions(target: Word) {
+  const candidates = new Set<Word>(target.topic === undefined ? [] : pictureTopics.get(topicKey(target)));
+  for (const group of similar) {
+    if (!group.includes(target.word)) continue;
+    for (const label of group) {
+      const word = wordsByLabel.get(label);
+      if (word) candidates.add(word);
+    }
+  }
+  return [...candidates].filter((word) => areDistinct(target, word));
 }
 
 export function distractorsFor(target: Word, difficulty: Difficulty) {
   if (difficulty === "easy") {
-    return vocabulary.filter((word) => word.group !== target.group && word.tier === 1);
+    return vocabulary.filter((word) => word.group !== target.group && word.tier === 1 && areDistinct(target, word));
   }
   if (difficulty === "hard") {
-    const neighbors = new Set(similar.filter((group) => group.includes(target.word)).flat());
-    const matches = vocabulary.filter((word) => word.word !== target.word && neighbors.has(word.word));
+    const matches = closePictureOptions(target);
     if (matches.length) return matches;
   }
-  return vocabulary.filter((word) => word.word !== target.word && word.group === target.group
+  return vocabulary.filter((word) => areDistinct(target, word) && word.group === target.group
     && (difficulty === "normal" ? word.tier <= 2 : word.tier >= 2));
 }

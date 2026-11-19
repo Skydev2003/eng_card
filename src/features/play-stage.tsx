@@ -10,7 +10,7 @@ import type { CorrectEvent } from "@/game/correct-events";
 import type { TrailAudio } from "./trail-audio";
 import { chasePressure } from "@/game/question-timer";
 import type { Feedback, PublicPlayer } from "@/game/room";
-import { compareScores, MATCH_MS, ROUND_SIZE, type Question, type Stats } from "@/game/rules";
+import { compareScores, MATCH_MS, ROUND_SIZE, type PublicQuestion, type Stats } from "@/game/rules";
 
 export function useClock(active: boolean) {
   const [now, setNow] = useState(0);
@@ -47,7 +47,7 @@ export function Leaderboard({ players, playerId, finished = false, count = ROUND
 export function PlayStage({ question, stats, index, feedback, hearts, startsAt, endsAt, now, busy, onAnswer, avatar,
   count = ROUND_SIZE, players = [], playerId, onExit, isRoom, error, recentCorrect = [], questionDeadline, questionMs = 5_000, sound,
 }: {
-  question: Omit<Question, "correct"> | null; stats: Stats; index: number; feedback: Feedback | null;
+  question: PublicQuestion | null; stats: Stats; index: number; feedback: Feedback | null;
   hearts: number; startsAt: number; endsAt: number; now: number; busy?: boolean; onAnswer: (choice: number) => void;
   avatar: Avatar; count?: number;
   players?: PublicPlayer[]; playerId?: string; recentCorrect?: CorrectEvent[]; questionDeadline?: number; questionMs?: number; sound: TrailAudio; onExit: () => void; isRoom?: boolean; error?: string;

@@ -1,7 +1,7 @@
-import { distractorsFor, wordsFor } from "./vocabulary.ts";
+import { closePictureOptions, distractorsFor, wordsFor } from "./vocabulary.ts";
 
 export const categories = {
-  all: "รวมทุกหมวด", people: "ผู้คน", animals: "สัตว์", objects: "สิ่งของ", places: "สถานที่", food: "อาหาร",
+  all: "รวมทุกหมวด", people: "ผู้คนและกิจกรรม", animals: "สัตว์และธรรมชาติ", objects: "สิ่งของ", places: "สถานที่และการเดินทาง", food: "อาหาร",
 };
 export const difficulties = { easy: "ง่าย", normal: "ปกติ", hard: "ยาก" };
 export type Settings = { category: keyof typeof categories; difficulty: keyof typeof difficulties; hearts: number; questionSeconds?: number };
@@ -10,7 +10,8 @@ export const ROUND_SIZE = 40;
 export const MATCH_MS = 180_000;
 export const CAPACITY = 6;
 
-export type Question = { image: string; options: [string, string]; correct: number };
+export type PublicQuestion = { image: string; options: [string, string] };
+export type Question = PublicQuestion & { correct: number };
 export type Stats = { score: number; hearts: number; streak: number; bestStreak: number; speed: number; correct: number };
 
 function shuffle<T>(items: T[]): T[] {
@@ -22,21 +23,39 @@ function shuffle<T>(items: T[]): T[] {
   return result;
 }
 
-export function buildDeck(settings: Settings, size = ROUND_SIZE): Question[] {
-  const preferred = wordsFor(settings.category, settings.difficulty);
-  const deck: Question[] = [];
-  while (deck.length < size) {
-    const batch = shuffle(preferred);
-    if (batch[0].image === deck.at(-1)?.image) batch.push(batch.shift()!);
-    for (const target of batch) {
-      const choices = distractorsFor(target, settings.difficulty);
-      const decoy = choices[Math.floor(Math.random() * choices.length)];
-      const options: Question["options"] = Math.random() < 0.5 ? [target.word, decoy.word] : [decoy.word, target.word];
-      deck.push({ image: target.image, options, correct: options.indexOf(target.word) });
-      if (deck.length === size) break;
+function* shuffledRounds<T>(items: T[]): Generator<T, never> {
+  let last: T | undefined;
+  while (true) {
+    const batch = shuffle(items);
+    if (batch.length > 1 && batch[0] === last) batch.push(batch.shift()!);
+    for (const item of batch) {
+      last = item;
+      yield item;
     }
   }
-  return deck;
+}
+
+function question(image: string, word: string, decoy: string): Question {
+  return Math.random() < 0.5
+    ? { image, options: [word, decoy], correct: 0 }
+    : { image, options: [decoy, word], correct: 1 };
+}
+
+export function publicQuestion({ image, options }: Question): PublicQuestion {
+  return { image, options };
+}
+
+export function buildDeck(settings: Settings, size = ROUND_SIZE): Question[] {
+  const { category, difficulty } = settings;
+  const picturePool = wordsFor(category, difficulty);
+  const pictures = shuffledRounds(difficulty === "hard"
+    ? picturePool.filter((entry) => closePictureOptions(entry).length > 0) : picturePool);
+  return Array.from({ length: size }, () => {
+    const target = pictures.next().value;
+    const choices = distractorsFor(target, difficulty);
+    const decoy = choices[Math.floor(Math.random() * choices.length)];
+    return question(target.image, target.word, decoy.word);
+  });
 }
 
 export function initialStats(hearts: number): Stats {
