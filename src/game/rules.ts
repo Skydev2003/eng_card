@@ -1,23 +1,14 @@
+import { distractorsFor, wordsFor } from "./vocabulary.ts";
+
 export const categories = {
   all: "รวมทุกหมวด", people: "ผู้คน", animals: "สัตว์", objects: "สิ่งของ", places: "สถานที่", food: "อาหาร",
 };
 export const difficulties = { easy: "ง่าย", normal: "ปกติ", hard: "ยาก" };
-export type Settings = { category: keyof typeof categories; difficulty: keyof typeof difficulties; hearts: number };
-export const defaults: Settings = { category: "all", difficulty: "normal", hearts: 3 };
+export type Settings = { category: keyof typeof categories; difficulty: keyof typeof difficulties; hearts: number; questionSeconds?: number };
+export const defaults: Settings = { category: "all", difficulty: "normal", hearts: 3, questionSeconds: 5 };
 export const ROUND_SIZE = 40;
 export const MATCH_MS = 180_000;
 export const CAPACITY = 6;
-
-const vocabulary = {
-  people: ["Doctor", "Firefighter", "Chef", "Artist", "Astronaut"],
-  animals: ["Cat", "Dog", "Elephant", "Giraffe", "Penguin"],
-  objects: ["Umbrella", "Scissors", "Bicycle", "Camera", "Backpack"],
-  places: ["Lighthouse", "Castle", "Hospital", "Windmill", "Airport"],
-  food: ["Apple", "Banana", "Pizza", "Pineapple", "Strawberry"],
-};
-const words = Object.entries(vocabulary).flatMap(([group, labels], row) =>
-  labels.map((word, column) => ({ group, word, level: column, image: `/art/words/${row * 5 + column}.jpg` })),
-);
 
 export type Question = { image: string; options: [string, string]; correct: number };
 export type Stats = { score: number; hearts: number; streak: number; bestStreak: number; speed: number; correct: number };
@@ -32,20 +23,14 @@ function shuffle<T>(items: T[]): T[] {
 }
 
 export function buildDeck(settings: Settings, size = ROUND_SIZE): Question[] {
-  const pool = words.filter((word) => settings.category === "all" || settings.category === word.group);
-  const preferred = pool.filter((word) =>
-    settings.difficulty === "easy" ? word.level < 3 : settings.difficulty === "hard" ? word.level > 1 : true,
-  );
+  const preferred = wordsFor(settings.category, settings.difficulty);
   const deck: Question[] = [];
   while (deck.length < size) {
     const batch = shuffle(preferred);
     if (batch[0].image === deck.at(-1)?.image) batch.push(batch.shift()!);
     for (const target of batch) {
-      const related = settings.difficulty !== "easy";
-      const choices = words.filter((word) =>
-        word !== target && (related ? word.group === target.group : word.group !== target.group),
-      );
-      const decoy = shuffle(choices)[0];
+      const choices = distractorsFor(target, settings.difficulty);
+      const decoy = choices[Math.floor(Math.random() * choices.length)];
       const options: Question["options"] = Math.random() < 0.5 ? [target.word, decoy.word] : [decoy.word, target.word];
       deck.push({ image: target.image, options, correct: options.indexOf(target.word) });
       if (deck.length === size) break;

@@ -12,10 +12,12 @@ export function useRoom() {
   const pending = useRef(false);
   const code = room?.code;
   const topic = room?.topic;
-  const activeDeadline = room?.phase === "playing" ? room.endsAt - room.offset : null;
+  const activeDeadline = room?.phase === "playing"
+    ? Math.min(room.endsAt, room.nextQuestionDeadline ?? room.endsAt) - room.offset : null;
 
   const refresh = useCallback(async (roomCode: string, resume = false, signal?: AbortSignal) => {
     try {
+      const sentAt = Date.now();
       const response = await fetch(`/api/rooms?code=${roomCode}`, { cache: "no-store", signal });
       if (signal?.aborted) return;
       if (response.status === 401 || response.status === 404) {
@@ -28,7 +30,7 @@ export function useRoom() {
       const data: RoomView = await response.json();
       if (signal?.aborted || sessionStorage.getItem("wordRunRoom") !== roomCode) return;
       setRoom((current) => current && (current.code !== roomCode || (current.version > data.version || (current.version === data.version && current.serverNow > data.serverNow)))
-        ? current : { ...data, offset: data.serverNow - Date.now() });
+        ? current : { ...data, offset: data.serverNow - (sentAt + Date.now()) / 2 });
     } catch {
       if (!signal?.aborted) setError("เชื่อมต่อห้องไม่ได้ ระบบจะลองเชื่อมต่อใหม่");
     }
@@ -86,8 +88,9 @@ export function useRoom() {
 
   useEffect(() => {
     if (!code || activeDeadline === null) return;
-    const timer = setTimeout(() => { void refresh(code); }, Math.max(0, activeDeadline - Date.now()) + 150);
-    return () => clearTimeout(timer);
+    const controller = new AbortController();
+    const timer = setTimeout(() => { void refresh(code, false, controller.signal); }, Math.max(0, activeDeadline - Date.now()) + 100);
+    return () => { clearTimeout(timer); controller.abort(); };
   }, [code, activeDeadline, refresh]);
 
   async function send(action: RoomAction) {
@@ -96,6 +99,7 @@ export function useRoom() {
     setBusy(true);
     setError("");
     try {
+      const sentAt = Date.now();
       const response = await fetch("/api/rooms", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -107,7 +111,7 @@ export function useRoom() {
         const next: RoomView = data;
         sessionStorage.setItem("wordRunRoom", next.code);
         setRoom((current) => current?.code === next.code && current.version > next.version
-          ? current : { ...next, offset: next.serverNow - Date.now() });
+          ? current : { ...next, offset: next.serverNow - (sentAt + Date.now()) / 2 });
       } else {
         sessionStorage.removeItem("wordRunRoom");
         setRoom(null);

@@ -13,16 +13,31 @@ export function runProgress(correct: number) {
   return { distance, stageIndex, steps, stage: stages[stageIndex] };
 }
 
-export const mascots = {
-  fox: "จิ้งจอก", bunny: "กระต่าย", chick: "ลูกเจี๊ยบ",
+export const hikers = {
+  midnight: "แมวดำ", bear: "หมีน้อย", straw: "แมวหมวกฟาง", tabby: "แมวลาย",
+  bunny: "กระต่าย", lamb: "แกะน้อย", sloth: "สลอธ", capybara: "คาปิบารา",
+  otter: "นากน้อย", calico: "แมวสามสี",
 };
+
+const mascots = { ...hikers, fox: "จิ้งจอก", chick: "ลูกเจี๊ยบ" };
+
+export function mascotArt(mascot: Avatar["mascot"]): keyof typeof hikers {
+  if (mascot === "fox") return "calico";
+  if (mascot === "chick") return "bear";
+  return mascot;
+}
+
+export function peerOffset(peerCorrect: number, localCorrect: number) {
+  return Math.max(-29, Math.min(33, (peerCorrect - localCorrect) * 3.5));
+}
+
 export const palettes = {
   original: { label: "สีดั้งเดิม", swatch: "#fbbd58" },
   mint: { label: "มิ้นต์", swatch: "#86e6b0" },
   berry: { label: "เบอร์รี", swatch: "#ed91ba" },
 };
 export type Avatar = { mascot: keyof typeof mascots; palette: keyof typeof palettes };
-export const defaultAvatar: Avatar = { mascot: "fox", palette: "original" };
+export const defaultAvatar: Avatar = { mascot: "calico", palette: "original" };
 
 export function validAvatar(value: unknown): value is Avatar {
   if (!value || typeof value !== "object") return false;
@@ -31,12 +46,13 @@ export function validAvatar(value: unknown): value is Avatar {
     && typeof avatar.palette === "string" && Object.hasOwn(palettes, avatar.palette);
 }
 
-const avatarHues: Record<Avatar["mascot"], Record<Avatar["palette"], number>> = {
-  fox: { original: 0, mint: 112, berry: -53 },
-  bunny: { original: 0, mint: -53, berry: 132 },
-  chick: { original: 0, mint: 96, berry: -77 },
+const baseHues: Record<keyof typeof hikers, number> = {
+  midnight: 17, bear: 38, straw: 41, tabby: -8, bunny: 195,
+  lamb: 73, sloth: 81, capybara: 27, otter: 28, calico: 35,
 };
 
 export function avatarHue(avatar: Avatar) {
-  return avatarHues[avatar.mascot][avatar.palette];
+  if (avatar.palette === "original") return 0;
+  const tint = avatar.palette === "mint" ? 136 : 325;
+  return tint - baseHues[mascotArt(avatar.mascot)];
 }

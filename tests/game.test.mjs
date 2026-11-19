@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { buildDeck, ROUND_SIZE, initialStats, grade, compareScores } from '../src/game/rules.ts';
@@ -40,4 +41,76 @@ test('the scene changes only at ten correct answers and caps at the final stage'
   assert.equal(runProgress(40).distance, 4000);
   assert.equal(validAvatar({ mascot: 'bunny', palette: 'mint' }), true);
   assert.equal(validAvatar({ mascot: '__proto__', palette: 'mint' }), false);
+});
+
+test('trail positions distinguish friends while keeping them inside the viewport', async () => {
+  const { peerOffset, mascotArt, validAvatar } = await import('../src/game/adventure.ts');
+  assert.ok(peerOffset(20, 10) > 0);
+  assert.ok(peerOffset(0, 10) < 0);
+  assert.ok(peerOffset(200, 0) <= 33);
+  assert.equal(mascotArt('fox'), 'calico');
+  assert.equal(validAvatar({ mascot: 'capybara', palette: 'mint' }), true);
+});
+
+test('the expanded catalog has distinct artwork and meaningful difficulty pools', async () => {
+  const { vocabulary, wordsFor, distractorsFor } = await import('../src/game/vocabulary.ts');
+  assert.ok(vocabulary.length >= 100);
+  assert.equal(new Set(vocabulary.map((entry) => entry.image)).size, vocabulary.length);
+  assert.equal(new Set(vocabulary.map((entry) => entry.word)).size, vocabulary.length);
+  for (const entry of vocabulary) {
+    assert.ok(existsSync(new URL('../public' + entry.image, import.meta.url)), entry.word);
+  }
+  const easy = wordsFor('all', 'easy');
+  const hard = wordsFor('all', 'hard');
+  assert.ok(easy.every((entry) => entry.tier === 1));
+  assert.ok(hard.every((entry) => entry.tier >= 2));
+  assert.ok(easy.length >= 30 && hard.length >= 40);
+  assert.ok(distractorsFor(vocabulary.find((entry) => entry.word === 'Cucumber'), 'hard')
+    .some((entry) => entry.word === 'Zucchini'));
+  const deck = buildDeck({ category: 'all', difficulty: 'hard', hearts: 3 });
+  assert.equal(new Set(deck.map(question => question.image)).size, ROUND_SIZE);
+});
+
+test('correct answer notices retain points without sending the answer to other players', async () => {
+  const { appendCorrect, visibleCorrect } = await import('../src/game/correct-events.ts');
+  const event = { playerId: 'host', playerName: 'Host', index: 7, points: 150, at: 1000 };
+  const events = appendCorrect([], event);
+  assert.deepEqual(events, [{ ...event }]);
+  assert.equal(appendCorrect(events, event).length, 1);
+  assert.equal(visibleCorrect(events, 1100)[0].points, 150);
+  assert.equal(visibleCorrect(events, 14000).length, 0);
+  assert.ok(!Object.hasOwn(events[0], 'answer'));
+});
+
+test('each expired question takes exactly one heart and advances its own deadline', async () => {
+  const { expireQuestions, chasePressure } = await import('../src/game/question-timer.ts');
+  const runner = { ...grade(initialStats(3), true), index: 1, deadline: 6_000 };
+  assert.equal(expireQuestions(runner, 5_999, 5_000, 40), runner);
+  const one = expireQuestions(runner, 6_000, 5_000, 40);
+  assert.equal(one.hearts, 2);
+  assert.equal(one.index, 2);
+  assert.equal(one.score, runner.score);
+  assert.equal(one.streak, 0);
+  assert.equal(one.deadline, 11_000);
+  assert.equal(expireQuestions(one, 6_000, 5_000, 40), one);
+  const gone = expireQuestions(runner, 16_000, 5_000, 40);
+  assert.equal(gone.hearts, 0);
+  assert.equal(gone.index, 4);
+  assert.equal(expireQuestions(gone, 99_000, 5_000, 40), gone);
+  assert.equal(expireQuestions({ ...runner, deadline: undefined }, 99_000, 5_000, 40).hearts, 3);
+  assert.equal(chasePressure(6_000, 1_000, 5_000), 0);
+  assert.equal(chasePressure(6_000, 3_500, 5_000), 0.5);
+  assert.equal(chasePressure(6_000, 7_000, 5_000), 1);
+});
+
+test('only a lobby with guests, all of them ready, can start', async () => {
+  const { guestReadiness, availableRunnerName } = await import('../src/game/lobby.ts');
+  const host = { id: 'h', ready: false, left: false };
+  const guest = { id: 'g', ready: false, left: false };
+  assert.equal(guestReadiness([host], host.id).canStart, false);
+  assert.equal(guestReadiness([host, guest], host.id).canStart, false);
+  assert.deepEqual(guestReadiness([host, { ...guest, ready: true }], host.id),
+    { ready: 1, total: 1, canStart: true });
+  assert.equal(guestReadiness([host, { ...guest, ready: true, left: true }], host.id).canStart, false);
+  assert.equal(availableRunnerName([{ name: 'นักวิ่ง 1' }, { name: 'นักวิ่ง 3' }]), 'นักวิ่ง 2');
 });
