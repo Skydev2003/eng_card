@@ -5,7 +5,8 @@ export const categories = {
   all: "รวมทุกหมวด", people: "ผู้คนและกิจกรรม", animals: "สัตว์และธรรมชาติ", objects: "สิ่งของ", places: "สถานที่และการเดินทาง", food: "อาหาร",
 };
 export const difficulties = { easy: "ง่าย", normal: "ปกติ", hard: "ยาก" };
-export type Settings = { category: keyof typeof categories; difficulty: keyof typeof difficulties; hearts: number; questionSeconds?: number };
+export const roomModes = { duel: "ดวลทุกคน", survival: "วิ่งเอาตัวรอด" };
+export type Settings = { category: keyof typeof categories; difficulty: keyof typeof difficulties; hearts: number; questionSeconds?: number; mode?: keyof typeof roomModes };
 export const defaults: Settings = { category: "all", difficulty: "normal", hearts: 3, questionSeconds: 5 };
 export const ROUND_SIZE = 40;
 export const MATCH_MS = 180_000;

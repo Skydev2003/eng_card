@@ -3,7 +3,7 @@
 import { useId } from "react";
 import { Compass, Leaf, Settings2, Zap } from "lucide-react";
 import { DEFAULT_QUESTION_SECONDS, QUESTION_SECONDS } from "@/game/question-timer";
-import { categories, difficulties, type Settings } from "@/game/rules";
+import { categories, difficulties, roomModes, type Settings } from "@/game/rules";
 
 const difficultyOptions = {
   easy: { title: "ง่าย", hint: "คำพื้นฐาน ตัวเลือกต่างกันชัด", icon: Leaf },
@@ -11,12 +11,20 @@ const difficultyOptions = {
   hard: { title: "ยาก", hint: "แยกคำที่มีความหมายใกล้กัน", icon: Zap },
 };
 
-export function RoundSettings({ value, onChange, disabled = false }: {
-  value: Settings; onChange: (value: Settings) => void; disabled?: boolean;
+export function RoundSettings({ value, onChange, disabled = false, multiplayer = false }: {
+  value: Settings; onChange: (value: Settings) => void; disabled?: boolean; multiplayer?: boolean;
 }) {
   const difficultyName = useId();
   return <fieldset disabled={disabled} className="settings">
     <legend><Settings2 size={17} /> ตั้งค่ารอบ</legend>
+    {multiplayer && <label className="question-setting">โหมดเกม
+      <select value={value.mode ?? "survival"} onChange={(e) => onChange({ ...value, mode: e.target.value as Settings["mode"] })}>
+        {Object.entries(roomModes).map(([key, name]) => <option key={key} value={key}>{name}</option>)}
+      </select>
+      <small>{value.mode === "duel"
+        ? "ทุกคนแข่งกันเอง ตอบโจทย์เดียวกันไปเรื่อย ๆ จนหมดเวลารอบ ตอบเร็วได้แต้มเพิ่ม"
+        : "วิ่งตามจังหวะของตัวเอง หัวใจหมดจะตกรอบ"}</small>
+    </label>}
     <label>หมวดคำศัพท์<select value={value.category} onChange={(e) => onChange({ ...value, category: e.target.value as Settings["category"] })}>
       {Object.entries(categories).map(([key, label]) => <option key={key} value={key}>{label}</option>)}
     </select></label>

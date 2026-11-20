@@ -12,6 +12,7 @@ export function useRoom() {
   const pending = useRef(false);
   const code = room?.code;
   const topic = room?.topic;
+  const playingDuel = Boolean(room?.duel);
   const activeDeadline = room?.phase === "playing"
     ? Math.min(room.endsAt, room.nextQuestionDeadline ?? room.endsAt) - room.offset : null;
 
@@ -54,7 +55,7 @@ export function useRoom() {
     const reload = () => refresh(code, false, controller.signal);
     const schedule = () => {
       if (disposed) return;
-      interval = setTimeout(async () => { await reload(); schedule(); }, connected ? 12_000 : 2_500);
+      interval = setTimeout(async () => { await reload(); schedule(); }, connected ? 12_000 : playingDuel ? 750 : 2_500);
     };
     const queueReload = () => {
       clearTimeout(debounce);
@@ -84,7 +85,7 @@ export function useRoom() {
       unsubscribe?.();
       window.removeEventListener("focus", queueReload);
     };
-  }, [code, topic, refresh]);
+  }, [code, topic, playingDuel, refresh]);
 
   useEffect(() => {
     if (!code || activeDeadline === null) return;

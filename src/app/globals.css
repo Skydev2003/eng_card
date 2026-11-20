@@ -272,6 +272,7 @@ input::placeholder { color: #6a654d; }
 .trail-bubble { position: relative; border-radius: 16px; border: 2px solid #e4c578; background: #fffdf0; padding: 6px; color: #58421f; box-shadow: 0 8px 18px #29351b50; }
 .trail-bubble::after { content: ""; position: absolute; left: calc(50% - 7px); bottom: -8px; width: 12px; height: 12px; background: #fffdf0; border-right: 2px solid #e4c578; border-bottom: 2px solid #e4c578; transform: rotate(45deg); }
 .trail-question h2 { text-align: center; font-size: 12px; margin-bottom: 4px; color: #5d4928; }
+.duel-status { text-align: center; font-size: 12px; font-weight: 800; color: #35512c; margin: 4px 0; }
 .question-timer { display: grid; grid-template-columns: minmax(20px,1fr) auto; gap: 5px; align-items: center; color: #426839; font-size: 11px; }
 .question-timer progress { width: 100%; height: 7px; accent-color: #639a46; }
 .question-timer-urgent { color: #a62918; }
@@ -342,6 +343,7 @@ input::placeholder { color: #6a654d; }
 .ground-answers button { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 6px 10px; min-height: clamp(53px,9vh,80px); background: #fff0bf; color: #523017; border: 4px solid #a7653e; border-bottom-width: 7px; border-radius: 12px; font: 850 clamp(16px,3vw,27px)/1.18 "Noto Sans Variable",sans-serif; box-shadow: 0 6px 10px #472b2248; overflow-wrap: anywhere; touch-action: manipulation; }
 .ground-answers button:hover:not(:disabled) { background: #ffdf8b; }
 .ground-answers button:active:not(:disabled) { transform: translateY(2px); }
+.ground-answers button[data-revealed] { opacity: 1; background: #dfedb2; color: #27451f; border-color: #5f853e; }
 .ground-answers kbd { font: 800 .66em/1.25 "Noto Sans Variable",sans-serif; background: #e6c27d; color: #523017; border-radius: 6px; padding: 3px 6px; }
 .trail-foot { background: #2b462cea; border: 1px solid #6b854d; border-radius: 8px; color: #fff8de; display: grid; grid-template-columns: auto minmax(28px,1fr) minmax(0,auto); gap: 8px; align-items: center; padding: 5px 8px; margin-top: 6px; font-size: 13px; min-height: 31px; }
 .trail-distance { font-weight: 850; white-space: nowrap; }
@@ -391,6 +393,13 @@ input::placeholder { color: #6a654d; }
 .trophy-points span { font-size: 11px; font-weight: 750; }
 .trophy-points strong { font-size: clamp(19px,4vw,30px); line-height: 1.2; }
 .trophy-table { width: 100%; border-collapse: separate; border-spacing: 0 4px; table-layout: fixed; text-align: center; font-variant-numeric: tabular-nums; font-size: clamp(12px,2.4vw,15px); }
+.duel-podium { display: flex; gap: 8px; justify-content: center; align-items: end; list-style: none; padding: 0; margin: 10px 0; }
+.duel-podium li { display: grid; justify-items: center; gap: 2px; width: min(30%, 150px); padding: 6px; border-radius: 12px; background: #fffae8; border: 1px solid #eddb9e; text-align: center; }
+.duel-podium li[data-rank="1"] { background: #fff0ba; border-color: #d5aa59; }
+.duel-podium li strong { max-width: 100%; overflow-wrap: anywhere; }
+.duel-podium li img { width: 38px; height: 40px; object-fit: contain; }
+.duel-podium li[data-rank="1"] img { width: 48px; height: 52px; }
+.lobby-summary .lobby-mode { grid-column: 1 / -1; }
 .trophy-table thead th { color: #585839; font-weight: 800; padding: 4px 2px; }
 .trophy-table thead th:nth-child(1) { width: 13%; }
 .trophy-table thead th:nth-child(2) { width: 40%; text-align: left; }

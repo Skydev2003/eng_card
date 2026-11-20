@@ -8,11 +8,13 @@ import { defaultAvatar, validAvatar } from "@/game/adventure";
 import { appendCorrect, type CorrectEvent } from "@/game/correct-events";
 import { DEFAULT_QUESTION_SECONDS, expireQuestions, QUESTION_SECONDS } from "@/game/question-timer";
 import { availableRunnerName, guestReadiness } from "@/game/lobby";
+import { compareDuelScores, DUEL_REVEAL_MS, openDuelQuestion, recordDuelVote, revealDuelQuestion, type DuelQuestion } from "@/game/duel";
 import { database } from "./db";
 
 type Player = PublicPlayer & { hash: string; feedback: Feedback | null; deadline?: number };
 type State = {
   settings: Settings; hostId: string; players: Player[]; deck: Question[]; recentCorrect?: CorrectEvent[]; startsAt: number; endsAt: number;
+  duel?: DuelQuestion;
 };
 const ttl = 86_400_000;
 const hash = (token: string) => createHash("sha256").update(token).digest("hex");
@@ -29,19 +31,67 @@ function db() {
 
 function getPhase(state: State, now: number): RoomView["phase"] {
   if (!state.startsAt) return "lobby";
+  if (state.duel) return now >= state.endsAt ? "finished" : "playing";
   const everyoneDone = state.players.every((p) => p.left || p.hearts === 0 || p.index >= state.deck.length);
   return everyoneDone || now >= state.endsAt ? "finished" : "playing";
 }
 
 function nextDeadline(state: State) {
+  if (state.duel) {
+    if (state.duel.reveal && state.duel.reveal.until >= state.endsAt) return;
+    return state.duel.reveal?.until ?? state.duel.deadline;
+  }
   const times = state.players.flatMap((player) =>
     !player.left && player.hearts && player.index < state.deck.length && player.deadline
       && player.deadline < state.endsAt ? [player.deadline] : []);
   return times.length ? Math.min(...times) : undefined;
 }
 
+function questionDuration(settings: Settings) {
+  return (settings.questionSeconds ?? DEFAULT_QUESTION_SECONDS) * 1_000;
+}
+
+function settleDuel(state: State, duel: DuelQuestion, now: number) {
+  if (duel.reveal) {
+    if (now < duel.reveal.until || now >= state.endsAt) return false;
+    const index = duel.index + 1;
+    if (index >= state.deck.length) {
+      const batch = buildDeck(state.settings);
+      const last = state.deck[duel.index];
+      if (batch[0].options[batch[0].correct] === last.options[last.correct]) {
+        batch.push(batch.shift()!);
+      }
+      state.deck.push(...batch);
+    }
+    state.duel = openDuelQuestion(index, now, questionDuration(state.settings), state.endsAt);
+    for (const player of state.players) player.feedback = null;
+    return true;
+  }
+
+  const question = state.deck[duel.index];
+  const results = revealDuelQuestion(duel, state.players, question.correct, state.settings.hearts, now);
+  if (!results) return false;
+  const at = Math.min(now, state.endsAt);
+  const overtook = Object.fromEntries(results.map(({ player, stats }) => [
+    player.id,
+    results.filter((rival) => compareDuelScores(rival.player, player) < 0 && compareDuelScores(stats, rival.stats) < 0)
+      .map(({ player: rival }) => rival.name),
+  ]));
+  for (const { player, correct, stats, points, reason } of results) {
+    if (correct) state.recentCorrect = appendCorrect(state.recentCorrect ?? [], {
+      playerId: player.id, playerName: player.name, index: duel.index, points, at,
+    });
+    Object.assign(player, stats, {
+      index: duel.index + 1, feedback: { correct, answer: question.options[question.correct], reason },
+    });
+  }
+  duel.reveal = { until: Math.min(at + DUEL_REVEAL_MS, state.endsAt), overtook };
+  return true;
+}
+
 function settleTimeouts(state: State, now: number) {
   if (!state.startsAt) return false;
+  if (state.duel) return settleDuel(state, state.duel, now);
   let updated = false;
   const cutoff = Math.min(now, state.endsAt - 1);
   const duration = (state.settings.questionSeconds ?? DEFAULT_QUESTION_SECONDS) * 1000;
@@ -58,14 +108,21 @@ function settleTimeouts(state: State, now: number) {
 
 function view(room: Room, state: State, player: Player, now: number): RoomView {
   const phase = getPhase(state, now);
-  const question = phase === "playing" && player.hearts > 0 ? state.deck[player.index] : undefined;
+  const duel = phase === "playing" ? state.duel : undefined;
+  const question = phase === "playing" && player.hearts > 0 ? state.deck[duel?.index ?? player.index] : undefined;
+  const activePlayers = duel ? state.players.filter((member) => !member.left) : [];
   return {
     code: room.code, version: room.version, topic: room.topic, settings: state.settings, hostId: state.hostId,
     playerId: player.id, phase, startsAt: state.startsAt, endsAt: state.endsAt, serverNow: now,
-    questionDeadline: question ? player.deadline : undefined,
+    questionDeadline: question ? duel?.deadline ?? player.deadline : undefined,
     nextQuestionDeadline: phase === "playing" ? nextDeadline(state) : undefined,
-    feedback: player.feedback, recentCorrect: state.recentCorrect, questionCount: state.deck.length || undefined,
+    feedback: player.feedback, recentCorrect: state.recentCorrect, questionCount: state.duel ? undefined : state.deck.length || undefined,
     question: question ? publicQuestion(question) : null,
+    duel: duel && question ? {
+      index: duel.index, answered: Boolean(duel.votes[player.id]),
+      answeredCount: activePlayers.filter((member) => duel.votes[member.id]).length, playerCount: activePlayers.length,
+      reveal: duel.reveal ? { correctChoice: question.correct, overtook: duel.reveal.overtook[player.id] ?? [] } : undefined,
+    } : undefined,
     players: state.players.map(({ id, name, index, left, ready, avatar, score, hearts, streak, bestStreak, speed, correct }) =>
       ({ id, name, index, left, ready: ready ?? false, avatar, score, hearts, streak, bestStreak, speed, correct })),
   };
@@ -76,10 +133,11 @@ function parseSettings(value: unknown): Settings {
   if (!s || typeof s.category !== "string" || !Object.hasOwn(categories, s.category)
     || typeof s.difficulty !== "string" || !Object.hasOwn(difficulties, s.difficulty)
     || typeof s.hearts !== "number" || !Number.isInteger(s.hearts) || s.hearts < 1 || s.hearts > 5
-    || (s.questionSeconds !== undefined && !QUESTION_SECONDS.some((seconds) => seconds === s.questionSeconds))) {
+    || (s.questionSeconds !== undefined && !QUESTION_SECONDS.some((seconds) => seconds === s.questionSeconds))
+    || (s.mode !== undefined && s.mode !== "duel" && s.mode !== "survival")) {
     throw new RoomError("การตั้งค่าห้องไม่ถูกต้อง");
   }
-  return { category: s.category, difficulty: s.difficulty, hearts: s.hearts, questionSeconds: s.questionSeconds ?? DEFAULT_QUESTION_SECONDS };
+  return { category: s.category, difficulty: s.difficulty, hearts: s.hearts, questionSeconds: s.questionSeconds ?? DEFAULT_QUESTION_SECONDS, mode: s.mode ?? "survival" };
 }
 
 function playerName(name: unknown) {
@@ -215,7 +273,7 @@ export async function mutateRoom(code: string, token: string | undefined, input:
           if (phase !== "finished") throw new RoomError("เกมยังไม่จบ", 409);
           state.players = state.players.filter((p) => !p.left);
           for (const member of state.players) Object.assign(member, initialStats(state.settings.hearts), { index: 0, feedback: null, deadline: undefined, ready: false });
-          Object.assign(state, { startsAt: 0, endsAt: 0, deck: [], recentCorrect: [] });
+          Object.assign(state, { startsAt: 0, endsAt: 0, deck: [], recentCorrect: [], duel: undefined });
           break;
         }
         if (phase !== "lobby") throw new RoomError("เกมเริ่มแล้ว", 409);
@@ -234,12 +292,21 @@ export async function mutateRoom(code: string, token: string | undefined, input:
         state.recentCorrect = [];
         state.startsAt = now + 3_000;
         state.endsAt = state.startsAt + MATCH_MS;
-        for (const member of state.players) {
-          member.deadline = state.startsAt + (state.settings.questionSeconds ?? DEFAULT_QUESTION_SECONDS) * 1_000;
+        if (state.settings.mode === "duel") {
+          state.duel = openDuelQuestion(0, state.startsAt, questionDuration(state.settings), state.endsAt);
+        } else {
+          for (const member of state.players) member.deadline = state.startsAt + questionDuration(state.settings);
         }
         break;
 
       case "answer": {
+        if (state.duel) {
+          if (input.round !== state.startsAt || input.index !== state.duel.index || phase !== "playing") return unchanged();
+          if (input.choice !== 0 && input.choice !== 1) throw new RoomError("คำตอบไม่ถูกต้อง");
+          if (!recordDuelVote(state.duel, player.id, input.choice, now)) return unchanged();
+          settleDuel(state, state.duel, now);
+          break;
+        }
         const question = state.deck[player.index];
         if (input.round !== state.startsAt || input.index !== player.index || phase !== "playing"
           || !question || player.hearts === 0 || now < state.startsAt) {
@@ -266,6 +333,7 @@ export async function mutateRoom(code: string, token: string | undefined, input:
         if (!nextHost) await tx.room.delete({ where: { code } });
         else {
           if (isHost) state.hostId = nextHost.id;
+          if (state.duel && phase === "playing") settleDuel(state, state.duel, now);
           await save();
         }
         return { view: null };

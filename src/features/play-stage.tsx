@@ -10,6 +10,7 @@ import type { CorrectEvent } from "@/game/correct-events";
 import type { TrailAudio } from "./trail-audio";
 import { chasePressure } from "@/game/question-timer";
 import type { Feedback, PublicPlayer } from "@/game/room";
+import { compareDuelScores, type DuelView } from "@/game/duel";
 import { compareScores, MATCH_MS, ROUND_SIZE, type PublicQuestion, type Stats } from "@/game/rules";
 
 export function useClock(active: boolean) {
@@ -24,11 +25,11 @@ export function useClock(active: boolean) {
   return now;
 }
 
-export function Leaderboard({ players, playerId, finished = false, count = ROUND_SIZE }: {
-  players: PublicPlayer[]; playerId: string; finished?: boolean; count?: number;
+export function Leaderboard({ players, playerId, finished = false, count = ROUND_SIZE, duel = false }: {
+  players: PublicPlayer[]; playerId: string; finished?: boolean; count?: number; duel?: boolean;
 }) {
   const rankScores = (a: PublicPlayer, b: PublicPlayer) =>
-    Number(b.hearts > 0) - Number(a.hearts > 0) || compareScores(a, b);
+    duel ? compareDuelScores(a, b) : Number(b.hearts > 0) - Number(a.hearts > 0) || compareScores(a, b);
   const sorted = players.filter((p) => !p.left).sort(rankScores);
   return <section className="panel scoreboard">
     <h2><Trophy size={20} /> อันดับผู้เล่น</h2>
@@ -37,7 +38,7 @@ export function Leaderboard({ players, playerId, finished = false, count = ROUND
       <Mascot avatar={p.avatar ?? defaultAvatar} />
       <span className="player-name">{p.name}{p.id === playerId && <small> คุณ</small>}
         {p.hearts === 0 && <small> · ตกรอบ</small>}
-        {!finished && p.hearts > 0 && p.index >= count && <small> · เล่นจบแล้ว</small>}
+        {!duel && !finished && p.hearts > 0 && p.index >= count && <small> · เล่นจบแล้ว</small>}
       </span>
       <strong>{p.score.toLocaleString("en-US")}</strong>
     </li>)}</ol>
@@ -45,11 +46,11 @@ export function Leaderboard({ players, playerId, finished = false, count = ROUND
 }
 
 export function PlayStage({ question, stats, index, feedback, hearts, startsAt, endsAt, now, busy, onAnswer, avatar,
-  count = ROUND_SIZE, players = [], playerId, onExit, isRoom, error, recentCorrect = [], questionDeadline, questionMs = 5_000, sound,
+  count = ROUND_SIZE, players = [], playerId, onExit, isRoom, error, recentCorrect = [], questionDeadline, questionMs = 5_000, sound, duel,
 }: {
   question: PublicQuestion | null; stats: Stats; index: number; feedback: Feedback | null;
   hearts: number; startsAt: number; endsAt: number; now: number; busy?: boolean; onAnswer: (choice: number) => void;
-  avatar: Avatar; count?: number;
+  avatar: Avatar; count?: number; duel?: DuelView;
   players?: PublicPlayer[]; playerId?: string; recentCorrect?: CorrectEvent[]; questionDeadline?: number; questionMs?: number; sound: TrailAudio; onExit: () => void; isRoom?: boolean; error?: string;
 }) {
   const frame = useRef<HTMLElement>(null);
@@ -64,9 +65,10 @@ export function PlayStage({ question, stats, index, feedback, hearts, startsAt, 
     if (feedback) sound.play(feedback.correct ? "right" : "wrong");
   });
   const playMilestone = useEffectEvent(() => sound.play("stage"));
+  const scoredIndex = duel ? (duel.reveal ? index + 1 : 0) : index;
   useEffect(() => {
-    if (index > 0) playFeedback();
-  }, [index]);
+    if (scoredIndex > 0) playFeedback();
+  }, [scoredIndex]);
   useEffect(() => {
     if (progress.stageIndex > 0) playMilestone();
   }, [progress.stageIndex]);
@@ -75,9 +77,9 @@ export function PlayStage({ question, stats, index, feedback, hearts, startsAt, 
   const remaining = Math.max(0, Math.min(MATCH_MS, endsAt - now));
   const time = Math.ceil(remaining / 1000);
   const timer = `${Math.floor(time / 60)}:${String(time % 60).padStart(2, "0")}`;
-  const questionRemaining = questionDeadline ? Math.max(0, Math.min(questionMs, questionDeadline - now)) : null;
-  const pressure = question && !countdown ? chasePressure(questionDeadline, now, questionMs) : 0;
-  const playable = !!question && !countdown && time > 0 && questionRemaining !== 0 && !busy;
+  const questionRemaining = questionDeadline && !duel?.reveal ? Math.max(0, Math.min(questionMs, questionDeadline - now)) : null;
+  const pressure = question && !countdown && !duel?.reveal && !duel?.answered ? chasePressure(questionDeadline, now, questionMs) : 0;
+  const playable = !!question && !countdown && time > 0 && questionRemaining !== 0 && !busy && !duel?.answered && !duel?.reveal;
 
   const upcomingImage = countdown ? question?.image : undefined;
   useEffect(() => {
@@ -96,11 +98,14 @@ export function PlayStage({ question, stats, index, feedback, hearts, startsAt, 
   }, []);
 
   const bubble = question && !countdown && <div className="trail-question">
-    <h2><span className="sr-only">{question.textClue ? "เลือกคำภาษาอังกฤษ " : "ภาพนี้คือคำว่าอะไร? "}</span>ข้อ {index + 1}/{count}</h2>
+    <h2><span className="sr-only">{question.textClue ? "เลือกคำภาษาอังกฤษ " : "ภาพนี้คือคำว่าอะไร? "}</span>ข้อ {index + 1}{duel ? "" : `/${count}`}</h2>
     {questionRemaining !== null && <div className={`question-timer${pressure >= 0.7 ? " question-timer-urgent" : ""}`}>
       <progress max={questionMs} value={questionRemaining} aria-label="เวลาตอบข้อนี้" />
       <strong aria-hidden="true">{Math.ceil(questionRemaining / 1_000)}s</strong>
     </div>}
+    {duel && <p className="duel-status" role="status">{duel.reveal ? "เฉลยแล้ว" : duel.answered
+      ? `ตอบแล้ว · รอเพื่อน ${duel.answeredCount}/${duel.playerCount}`
+      : `ตอบแล้ว ${duel.answeredCount}/${duel.playerCount}`}</p>}
     {question.textClue ? <div className="word-clue" data-kind={question.textClue.kind} lang="th">
       <span>{question.textClue.kind === "number" ? "ตัวเลข" : "คำใบ้ภาษาไทย"}</span>
       <p>{question.textClue.value}</p>
@@ -139,7 +144,7 @@ export function PlayStage({ question, stats, index, feedback, hearts, startsAt, 
     </header>
     <div className="trail-location"><MapPin size={17} /><span>{progress.stage.name}</span><small>ด่าน {progress.stageIndex + 1}/{stages.length}</small></div>
     <AnswerNotices events={recentCorrect} now={now} playerId={playerId} />
-    {showScores && playerId && <aside className="game-drawer"><Leaderboard players={players} playerId={playerId} count={count} /></aside>}
+    {showScores && playerId && <aside className="game-drawer"><Leaderboard players={players} playerId={playerId} count={count} duel={Boolean(duel)} /></aside>}
     {error && <p className="game-error notice" role="alert">{error}</p>}
     {countdown > 0 && <div className="trail-status" aria-live="polite"><strong>{countdown}</strong><p>เตรียมวิ่ง!</p></div>}
     {!countdown && !question && <div className="trail-status">
@@ -147,13 +152,14 @@ export function PlayStage({ question, stats, index, feedback, hearts, startsAt, 
     </div>}
     <div className="trail-ground-ui">
       {question && !countdown && <div className="ground-answers" aria-label="ตัวเลือกคำศัพท์">{question.options.map((option, i) =>
-        <button type="button" disabled={!playable} key={i} onClick={() => onAnswer(i)}>
-          <kbd>{i + 1}</kbd><span>{option}</span>
+        <button type="button" disabled={!playable} key={i} onClick={() => onAnswer(i)}
+          data-revealed={duel?.reveal?.correctChoice === i || undefined}>
+          <kbd>{i + 1}</kbd><span>{option}</span>{duel?.reveal?.correctChoice === i && <><Check size={20} aria-hidden="true" /><span className="sr-only">คำตอบที่ถูก</span></>}
         </button>)}</div>}
       <div className="trail-foot">
         <span className="trail-distance">{progress.distance.toLocaleString("en-US")} ม.</span>
         <progress max={MATCH_MS} value={remaining} aria-label="เวลาที่เหลือ" />
-        <span className="trail-feedback" aria-live="polite">{feedback && (feedback.correct
+        <span className="trail-feedback" aria-live="polite">{duel?.reveal?.overtook.length ? <>แซง {duel.reveal.overtook.join(", ")} แล้ว!</> : feedback && (feedback.correct
           ? <><Check size={16} /> ถูกต้อง · {feedback.answer}</>
           : <><X size={16} /> {feedback.reason === "timeout" ? "หมดเวลา · เสียหัวใจ" : "เสียหัวใจ"} · {feedback.answer}</>)}</span>
       </div>

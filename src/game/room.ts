@@ -1,6 +1,7 @@
 import type { CorrectEvent } from "./correct-events";
 import type { Avatar } from "./adventure";
 import type { PublicQuestion, Settings, Stats } from "./rules";
+import type { DuelView } from "./duel";
 
 export type PublicPlayer = Stats & { id: string; name: string; index: number; left: boolean; ready?: boolean; avatar?: Avatar };
 export type Feedback = { correct: boolean; answer: string; reason?: "timeout" };
@@ -22,6 +23,7 @@ export type RoomView = {
   question: PublicQuestion | null;
   feedback: Feedback | null;
   recentCorrect?: CorrectEvent[];
+  duel?: DuelView;
 };
 
 export type RoomAction =

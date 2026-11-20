@@ -28,6 +28,7 @@ function GameHelp({ dialog }: { dialog: React.RefObject<HTMLDialogElement | null
       <li><Timer /><div><strong>ตอบก่อนมอนสเตอร์มาถึง</strong><p>ค่าเริ่มต้น {DEFAULT_QUESTION_SECONDS} วินาทีต่อข้อ ตอบผิดหรือหมดเวลาเสีย 1 หัวใจ</p></div></li>
       <li><Zap /><div><strong>ต่อคอมโบ</strong><p>ตอบถูกติดกันได้แต้มเพิ่ม และทุก 10 คำตอบถูกจะเปลี่ยนฉาก</p></div></li>
       <li><Heart /><div><strong>รักษาหัวใจ</strong><p>หัวใจหมดจะตกรอบ ผู้รอดที่ได้แต้มมากที่สุดชนะ</p></div></li>
+      <li><Users /><div><strong>ดวลทุกคน</strong><p>ผู้เล่น 2–6 คนตอบโจทย์เดียวกัน ตอบเร็วได้แต้มเพิ่ม หัวใจหมดจะเติมใหม่ เล่นจนหมดเวลารอบ</p></div></li>
     </ul>
     <a className="art-credits" href="/art/words/oxford/credits.txt" target="_blank" rel="noreferrer">เครดิตภาพคำศัพท์</a>
   </dialog>;
@@ -36,7 +37,7 @@ function GameHelp({ dialog }: { dialog: React.RefObject<HTMLDialogElement | null
 export function Arcade() {
   const help = useRef<HTMLDialogElement>(null);
   const [menu, setMenu] = useState<Menu>("home");
-  const [settings, setSettings] = useState(defaults);
+  const [settings, setSettings] = useState<typeof defaults>(() => ({ ...defaults, mode: "duel" }));
   const [joinCode, setJoinCode] = useState("");
   const [soloActive, setSoloActive] = useState(false);
   const [soloAvatar, setSoloAvatar] = useState<Avatar>(defaultAvatar);
@@ -154,7 +155,7 @@ export function Arcade() {
           {menu === "solo" && <div className="camp-preview"><Mascot avatar={avatar} /></div>}
         </div>
         <form onSubmit={submit}>
-          <RoundSettings value={settings} onChange={setSettings} disabled={busy} />
+          <RoundSettings value={settings} onChange={setSettings} disabled={busy} multiplayer={menu === "create"} />
           {menu === "solo" && <AvatarPicker avatar={avatar} onChange={setAvatar} />}
           {alert}
           <button className="primary wide" disabled={busy}>{busy ? "กำลังเชื่อมต่อ…" : menu === "solo" ? "เริ่มวิ่ง" : "สร้างห้อง"} <ArrowRight size={18} /></button>
@@ -174,12 +175,12 @@ export function Arcade() {
       {room && player && <>
         {!inGame && alert}
         {room.phase === "lobby" ? <RoomLobby key={room.code} room={room} player={player} busy={busy} send={send} onAvatar={changeAvatar} />
-          : room.phase === "playing" ? <PlayStage question={room.question} stats={player} index={player.index} hearts={room.settings.hearts} feedback={room.feedback}
+          : room.phase === "playing" ? <PlayStage question={room.question} stats={player} index={room.duel?.index ?? player.index} hearts={room.settings.hearts} feedback={room.feedback} duel={room.duel}
             startsAt={room.startsAt} endsAt={room.endsAt} now={clock} busy={busy} avatar={roomAvatar} count={room.questionCount}
             players={room.players} playerId={player.id} isRoom error={error} recentCorrect={room.recentCorrect}
             questionDeadline={room.questionDeadline} questionMs={(room.settings.questionSeconds ?? DEFAULT_QUESTION_SECONDS) * 1_000} sound={sound}
             onExit={() => void send({ action: "leave" })}
-            onAnswer={(choice) => void send({ action: "answer", index: player.index, round: room.startsAt, choice })} /> : <RaceResults runners={room.players} playerId={player.id} questionCount={room.questionCount ?? ROUND_SIZE}
+            onAnswer={(choice) => void send({ action: "answer", index: room.duel?.index ?? player.index, round: room.startsAt, choice })} /> : <RaceResults runners={room.players} playerId={player.id} questionCount={room.questionCount ?? ROUND_SIZE} duel={room.settings.mode === "duel"}
             notices={<AnswerNotices events={room.recentCorrect ?? []} now={clock} playerId={player.id} />}>
             {host ? <button className="primary" disabled={busy} onClick={() => void send({ action: "rematch" })}><Play size={18} /> กลับห้องเพื่อเล่นใหม่</button>
               : <p>รอโฮสต์เปิดรอบใหม่</p>}

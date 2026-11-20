@@ -6,7 +6,7 @@ import { defaultAvatar, type Avatar } from "@/game/adventure";
 import { guestReadiness } from "@/game/lobby";
 import { DEFAULT_QUESTION_SECONDS } from "@/game/question-timer";
 import type { PublicPlayer, RoomAction, RoomView } from "@/game/room";
-import { CAPACITY, categories, difficulties, type Settings } from "@/game/rules";
+import { CAPACITY, categories, difficulties, roomModes, type Settings } from "@/game/rules";
 import { RoundSettings } from "./round-settings";
 import { AvatarPicker, Mascot } from "./run-scene";
 
@@ -23,7 +23,8 @@ export function RoomLobby({ room, player, busy, send, onAvatar }: {
   const settings = room.settings;
   const seconds = settings.questionSeconds ?? DEFAULT_QUESTION_SECONDS;
   const changed = draft !== null && (draft.category !== settings.category || draft.difficulty !== settings.difficulty
-    || draft.hearts !== settings.hearts || draft.questionSeconds !== seconds);
+    || draft.hearts !== settings.hearts || draft.questionSeconds !== seconds
+    || (draft.mode ?? "survival") !== (settings.mode ?? "survival"));
 
   async function saveName(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -83,10 +84,11 @@ export function RoomLobby({ room, player, busy, send, onAvatar }: {
           </button>}
         </div>
         {host && draft ? <form className="lobby-settings-form" onSubmit={saveSettings}>
-          <RoundSettings value={draft} onChange={setDraft} disabled={busy} />
+          <RoundSettings value={draft} onChange={setDraft} disabled={busy} multiplayer />
           <p>เมื่อบันทึก ผู้เล่นต้องกดพร้อมอีกครั้ง</p>
           <button className="primary wide" type="submit" disabled={busy || !changed}>บันทึกการตั้งค่า</button>
         </form> : <dl className="lobby-summary">
+          <div className="lobby-mode"><dt>โหมดเกม</dt><dd>{roomModes[settings.mode ?? "survival"]}</dd></div>
           <div><dt>หมวด</dt><dd>{categories[settings.category]}</dd></div>
           <div><dt>ระดับ</dt><dd>{difficulties[settings.difficulty]}</dd></div>
           <div><dt>หัวใจ</dt><dd>{settings.hearts} ดวง</dd></div>
