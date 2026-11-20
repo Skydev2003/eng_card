@@ -24,7 +24,7 @@ function GameHelp({ dialog }: { dialog: React.RefObject<HTMLDialogElement | null
     <form method="dialog"><button className="game-icon" aria-label="ปิดวิธีเล่น"><X size={20} /></button></form>
     <h2 id="help-title">วิธีเอาตัวรอด</h2>
     <ul>
-      <li><BookOpen /><div><strong>ดูภาพ เลือกคำ</strong><p>แตะการ์ดบนพื้น หรือกด 1 และ 2 บนคีย์บอร์ด</p></div></li>
+      <li><BookOpen /><div><strong>ดูโจทย์ เลือกคำ</strong><p>ดูภาพ ตัวเลข หรือคำใบ้ภาษาไทย แล้วแตะคำตอบบนพื้น หรือกด 1 และ 2 บนคีย์บอร์ด</p></div></li>
       <li><Timer /><div><strong>ตอบก่อนมอนสเตอร์มาถึง</strong><p>ค่าเริ่มต้น {DEFAULT_QUESTION_SECONDS} วินาทีต่อข้อ ตอบผิดหรือหมดเวลาเสีย 1 หัวใจ</p></div></li>
       <li><Zap /><div><strong>ต่อคอมโบ</strong><p>ตอบถูกติดกันได้แต้มเพิ่ม และทุก 10 คำตอบถูกจะเปลี่ยนฉาก</p></div></li>
       <li><Heart /><div><strong>รักษาหัวใจ</strong><p>หัวใจหมดจะตกรอบ ผู้รอดที่ได้แต้มมากที่สุดชนะ</p></div></li>
@@ -116,7 +116,7 @@ export function Arcade() {
             <div className="title-identity">
               <h1 id="game-title" aria-label="WordRun">WORD<span>RUN</span></h1>
               <p className="title-tagline">คิดให้ไว วิ่งให้รอด!</p>
-              <p className="title-description">ดูภาพ เลือกศัพท์อังกฤษ แล้ววิ่งหนีเจ้ามอนสเตอร์</p>
+              <p className="title-description">ดูโจทย์ เลือกศัพท์อังกฤษ แล้ววิ่งหนีเจ้ามอนสเตอร์</p>
               <nav className="title-menu" aria-label="เมนูเริ่มเกม">
                 <button className="title-choice title-choice-main" onClick={() => go("solo")}>
                   <Play size={21} fill="currentColor" /><span>เล่นคนเดียว</span><ArrowRight size={19} />

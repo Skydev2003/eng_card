@@ -278,6 +278,19 @@ input::placeholder { color: #6a654d; }
 .question-timer-urgent progress { accent-color: #ca5438; }
 .question-setting { grid-column: 1/-1; }
 .word-image { width: var(--prompt-size); height: var(--prompt-size); border-radius: 9px; display: block; }
+.word-clue {
+  width: max-content; min-width: clamp(98px, 19vw, 146px); max-width: min(72vw, 260px);
+  min-height: var(--prompt-size); border-radius: 9px; padding: clamp(4px, 1vh, 12px) 12px;
+  display: grid; place-content: center; gap: 2px; text-align: center;
+  background: #f1e9cd; color: #334827;
+}
+.word-clue > span { font-size: clamp(10px, 1.4vw, 13px); font-weight: 750; color: #555134; }
+.word-clue > p { font-size: clamp(17px, 2.3vw, 24px); font-weight: 850; line-height: 1.4; text-wrap: balance; }
+.word-clue[data-kind="number"] { background: #e8efcb; }
+.word-clue[data-kind="number"] > p {
+  font-size: clamp(28px, min(10vw, 7.5vh), 64px); font-weight: 900; line-height: 1.12;
+  font-variant-numeric: tabular-nums;
+}
 .art-credits { display: inline-block; margin-top: 12px; color: #304228; text-decoration: underline; }
 .trail-wind, .trail-grass { position: absolute; inset: 0; pointer-events: none; }
 .trail-wind { z-index: 3; }

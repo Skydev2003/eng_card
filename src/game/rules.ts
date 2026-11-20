@@ -1,4 +1,5 @@
 import { closePictureOptions, distractorsFor, wordsFor } from "./vocabulary.ts";
+import { textClueFor, type WordTextClue } from "./text-clues.ts";
 
 export const categories = {
   all: "รวมทุกหมวด", people: "ผู้คนและกิจกรรม", animals: "สัตว์และธรรมชาติ", objects: "สิ่งของ", places: "สถานที่และการเดินทาง", food: "อาหาร",
@@ -10,7 +11,8 @@ export const ROUND_SIZE = 40;
 export const MATCH_MS = 180_000;
 export const CAPACITY = 6;
 
-export type PublicQuestion = { image: string; options: [string, string] };
+type QuestionClue = { image: string; textClue?: never } | { textClue: WordTextClue; image?: never };
+export type PublicQuestion = QuestionClue & { options: [string, string] };
 export type Question = PublicQuestion & { correct: number };
 export type Stats = { score: number; hearts: number; streak: number; bestStreak: number; speed: number; correct: number };
 
@@ -36,13 +38,17 @@ function* shuffledRounds<T>(items: T[]): Generator<T, never> {
 }
 
 function question(image: string, word: string, decoy: string): Question {
+  const textClue = textClueFor(word);
+  const clue = textClue ? { textClue } : { image };
   return Math.random() < 0.5
-    ? { image, options: [word, decoy], correct: 0 }
-    : { image, options: [decoy, word], correct: 1 };
+    ? { ...clue, options: [word, decoy], correct: 0 }
+    : { ...clue, options: [decoy, word], correct: 1 };
 }
 
-export function publicQuestion({ image, options }: Question): PublicQuestion {
-  return { image, options };
+export function publicQuestion(question: Question): PublicQuestion {
+  return question.textClue
+    ? { textClue: question.textClue, options: question.options }
+    : { image: question.image, options: question.options };
 }
 
 export function buildDeck(settings: Settings, size = ROUND_SIZE): Question[] {

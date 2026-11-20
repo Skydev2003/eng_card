@@ -10,9 +10,13 @@ test('each category and difficulty can deliver a full deck of unambiguous questi
       assert.equal(deck.length, ROUND_SIZE);
       for (const [index, q] of deck.entries()) {
         assert.equal(new Set(q.options).size, 2);
-        assert.ok(q.image.startsWith('/art/words/'));
-        assert.ok(!Object.hasOwn(q, 'prompt'));
-        assert.notEqual(q.image, deck[index - 1]?.image);
+        if (q.textClue) {
+          assert.ok(['number', 'thai'].includes(q.textClue.kind));
+          assert.equal(q.image, undefined);
+        } else {
+          assert.ok(q.image.startsWith('/art/words/'));
+        }
+        assert.notEqual(q.options[q.correct], deck[index - 1]?.options[deck[index - 1]?.correct]);
       }
     }
   }
@@ -69,7 +73,7 @@ test('the expanded catalog has distinct artwork and meaningful difficulty pools'
   assert.ok(distractorsFor(vocabulary.find((entry) => entry.word === 'Cucumber'), 'hard')
     .some((entry) => entry.word === 'Zucchini'));
   const deck = buildDeck({ category: 'all', difficulty: 'hard', hearts: 3 });
-  assert.equal(new Set(deck.map(question => question.image)).size, ROUND_SIZE);
+  assert.equal(new Set(deck.map(question => question.options[question.correct])).size, ROUND_SIZE);
 });
 
 test('correct answer notices retain points without sending the answer to other players', async () => {
@@ -138,12 +142,33 @@ test('new Oxford picture cards are unique and hard decks always use a close pict
   }
   for (const category of ['all', 'people', 'animals', 'objects', 'places', 'food']) {
     const deck = buildDeck({ category, difficulty: 'hard', hearts: 3 });
-    assert.ok(deck.some(question => question.image.includes('/oxford/')));
+    assert.ok(deck.some(question => question.image?.includes('/oxford/')));
     for (const question of deck) {
-      const entry = vocabulary.find(item => item.image === question.image);
+      const entry = vocabulary.find(item => item.word === question.options[question.correct]);
       assert.ok(entry && (category === 'all' || entry.group === category));
       assert.ok(closePictureOptions(entry).some(item => item.word === question.options[1 - question.correct]));
-      assert.deepEqual(publicQuestion(question), { image: entry.image, options: question.options });
+      const visible = question.textClue ? { textClue: question.textClue } : { image: entry.image };
+      assert.deepEqual(publicQuestion(question), { ...visible, options: question.options });
     }
   }
+});
+
+test('number and Thai clues replace their images without exposing the correct option', async () => {
+  const { vocabulary } = await import('../src/game/vocabulary.ts');
+  const { publicQuestion } = await import('../src/game/rules.ts');
+  const deck = ['normal', 'hard'].flatMap(difficulty =>
+    buildDeck({ category: 'all', difficulty, hearts: 3 }, vocabulary.length));
+  const cardFor = (word) => deck.find(question => question.options[question.correct] === word);
+  for (const [word, textClue] of [
+    ['Five', { kind: 'number', value: '5' }],
+    ['Hundred', { kind: 'number', value: '100' }],
+    ['Quarter', { kind: 'number', value: '¼' }],
+    ['Confused', { kind: 'thai', value: 'รู้สึกสับสน' }],
+    ['Length', { kind: 'thai', value: 'ความยาว' }],
+  ]) {
+    const question = cardFor(word);
+    assert.ok(question, word);
+    assert.deepEqual(publicQuestion(question), { textClue, options: question.options });
+  }
+  assert.ok(cardFor('Cat').image);
 });

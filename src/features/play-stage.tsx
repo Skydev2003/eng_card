@@ -96,12 +96,15 @@ export function PlayStage({ question, stats, index, feedback, hearts, startsAt, 
   }, []);
 
   const bubble = question && !countdown && <div className="trail-question">
-    <h2><span className="sr-only">ภาพนี้คือคำว่าอะไร? </span>ข้อ {index + 1}/{count}</h2>
+    <h2><span className="sr-only">{question.textClue ? "เลือกคำภาษาอังกฤษ " : "ภาพนี้คือคำว่าอะไร? "}</span>ข้อ {index + 1}/{count}</h2>
     {questionRemaining !== null && <div className={`question-timer${pressure >= 0.7 ? " question-timer-urgent" : ""}`}>
       <progress max={questionMs} value={questionRemaining} aria-label="เวลาตอบข้อนี้" />
       <strong aria-hidden="true">{Math.ceil(questionRemaining / 1_000)}s</strong>
     </div>}
-    <Image src={question.image} alt="ภาพโจทย์คำศัพท์" width={168} height={168} unoptimized loading="eager" className="word-image" />
+    {question.textClue ? <div className="word-clue" data-kind={question.textClue.kind} lang="th">
+      <span>{question.textClue.kind === "number" ? "ตัวเลข" : "คำใบ้ภาษาไทย"}</span>
+      <p>{question.textClue.value}</p>
+    </div> : <Image src={question.image} alt="ภาพโจทย์คำศัพท์" width={168} height={168} unoptimized loading="eager" className="word-image" />}
   </div>;
 
   return <section className="game-screen" ref={frame} aria-label="สนามวิ่ง WordRun">

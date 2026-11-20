@@ -8,7 +8,7 @@ import { categories, difficulties, type Settings } from "@/game/rules";
 const difficultyOptions = {
   easy: { title: "ง่าย", hint: "คำพื้นฐาน ตัวเลือกต่างกันชัด", icon: Leaf },
   normal: { title: "ปกติ", hint: "คำหลากหลาย ตัวเลือกหมวดเดียวกัน", icon: Compass },
-  hard: { title: "ยาก", hint: "ดูภาพแล้วแยกคำในกลุ่มเดียวกัน", icon: Zap },
+  hard: { title: "ยาก", hint: "แยกคำที่มีความหมายใกล้กัน", icon: Zap },
 };
 
 export function RoundSettings({ value, onChange, disabled = false }: {
