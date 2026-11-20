@@ -79,10 +79,29 @@ const interchangeable = [
   ["Street", "Road"], ["Railway", "Track"], ["Sea", "Ocean"], ["Apartment", "Flat"],
   ["Harbor", "Harbour", "Port"], ["Ground", "Yard"], ["University", "College"],
   ["Alarm", "Clock"], ["Baseball", "Ball"], ["Signal", "Sign"], ["Stair", "Step"],
-  ["Dirt", "Soil"], ["Drive", "Driving"], ["Cook", "Cooking"], ["Fly", "Flying"],
+  ["Dirt", "Soil"], ["Drive", "Driving"], ["Cook", "Cooking"], ["Fly", "Flying"], ["Tyre", "Wheel"],
+  ["Actor", "Actress"], ["Boy", "Child"], ["Girl", "Child"], ["Teenager", "Student", "Pupil"],
+  ["Tourist", "Traveller", "Visitor", "Guest"], ["Painter", "Artist"], ["Journalist", "Reporter"],
+  ["Airline", "Flight", "Aircraft"], ["Campus", "College", "University"], ["Lab", "Laboratory"],
+  ["Sleep", "Asleep"], ["Fix", "Repair"], ["Laugh", "Happy"], ["Afraid", "Nervous", "Fear"],
+  ["Injury", "Wound", "Pain"], ["Borrow", "Lend"], ["Buy", "Pay"], ["Race", "Racing"],
+  ["Reward", "Prize", "Award"], ["Lesson", "Teaching", "Lecture", "Presentation"],
+  ["Venue", "Location", "Destination"], ["Sea", "Ocean", "Wave"], ["Movie", "Film"],
+  ["Photo", "Image", "Illustration"], ["Art", "Painting", "Drawing"], ["Audio", "Recording", "Podcast"],
+  ["Internet", "Network", "Web"], ["Tiny", "Little", "Small"], ["Huge", "Large", "Big", "Giant"],
+  ["Danger", "Warning", "Notice"], ["Land", "Ground", "Countryside"], ["Island", "Land"],
+  ["Worker", "Builder"], ["Charity", "Donate", "Volunteer"], ["Hand", "Palm"], ["Organ", "Lung"],
 ];
 
 const wordsByLabel = new Map(vocabulary.map((word) => [word.word, word]));
+const obscuredChoices = new Map<string, Set<string>>();
+for (const family of interchangeable) {
+  for (const label of family) {
+    const choices = obscuredChoices.get(label) ?? new Set<string>();
+    for (const relative of family) choices.add(relative);
+    obscuredChoices.set(label, choices);
+  }
+}
 const pictureTopics = new Map<string, Word[]>();
 function topicKey(word: Word) { return `${word.group}/${word.topic}`; }
 for (const word of vocabulary) {
@@ -94,7 +113,7 @@ for (const word of vocabulary) {
 }
 
 function areDistinct(a: Word, b: Word) {
-  return a.word !== b.word && !interchangeable.some((group) => group.includes(a.word) && group.includes(b.word));
+  return a.word !== b.word && !obscuredChoices.get(a.word)?.has(b.word);
 }
 
 export function wordsFor(category: WordGroup | "all", difficulty: Difficulty) {

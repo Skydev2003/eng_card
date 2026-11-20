@@ -419,17 +419,11 @@ Vocabulary checked against Oxford University Press’s public Oxford 3000 refere
 460 WordRun original counting artwork
 
 Wikimedia Commons photographs (resized, framed and converted to WebP; same licence as the source)
-063 | Refrigerator | W.carter | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:Open_refrigerator_with_food_at_night.jpg
-417 | Bell pepper | Kham Tran - www.khamtran.com | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Green-Yellow-Red-Pepper-2009.jpg
-425 | Aircraft | Alan Wilson from Stilton, Peterborough, Cambs, UK | CC BY-SA 2.0 (https://creativecommons.org/licenses/by-sa/2.0) | https://commons.wikimedia.org/wiki/File:Cessna_172S_Skyhawk_%E2%80%98G-JMKE%E2%80%99_(45077563364).jpg
-461 | Factory | AndreasPraefcke | CC BY 3.0 (https://creativecommons.org/licenses/by/3.0) | https://commons.wikimedia.org/wiki/File:Wolfsburg_VW-Werk.jpg
 462 | Restaurant | Mcg2132 | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:Barbieri_-_ViaSophia25668.jpg
 463 | Tower | Kakidai | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Tokyo_Sky_Tree_2012.JPG
 464 | Palace | Tim Adams | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:Palacio_Real_de_Madrid_Julio_2016_(cropped).jpg
 465 | Curtain | Nieuw~commonswiki | CC BY-SA 3.0 (http://creativecommons.org/licenses/by-sa/3.0/) | https://commons.wikimedia.org/wiki/File:Gordijnen_aan_venster.JPG
-466 | Sink | Amin | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:Luxury_sink.jpg
 467 | Gym | Jorge Royan | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Amsterdam_-_Gymnasium_-_0591.jpg
-468 | Lake | No machine-readable author provided. Marius~commonswiki assumed (based on copyright claims). | CC BY-SA 3.0 (http://creativecommons.org/licenses/by-sa/3.0/) | https://commons.wikimedia.org/wiki/File:Lake_Idro_Italy_2005-08-16.jpg
 
 Additional photographs (resized, framed and converted to WebP under the source licence)
 217 | Ankle | אנדר-ויק | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Ankle.jpg
@@ -438,31 +432,23 @@ Additional photographs (resized, framed and converted to WebP under the source l
 280 | Basketball | kris krüg from Vancouver, Canada | CC BY-SA 2.0 (https://creativecommons.org/licenses/by-sa/2.0) | https://commons.wikimedia.org/wiki/File:USA_vs._China_Mens_Basketball_-_Beijing_2008_Olympic_Games_(2751923597).jpg
 328 | Western honey bee | Andreas Trepte | CC BY-SA 2.5 (https://creativecommons.org/licenses/by-sa/2.5) | https://commons.wikimedia.org/wiki/File:Apis_mellifera_Western_honey_bee.jpg
 003 | Bird | C. Robiller / naturlichter.de (Hyla meridionalis) | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Kleiber_Flug.jpg
-317 | Boat | Kondicherry | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Motorboat_at_Kankaria_lake.JPG
-171 | Bus | SIA321 | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:LTZ1328-19-20241030-160332.jpg
-310 | Car | Daniel Lu (User:dllu) | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:White_Toyota_Corolla_sedan_in_San_Jose_California_dllu.jpg
 470 | Climbing | Paulliampritchard | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:01ElCaballo_copy.jpg
 471 | Cottage | Kenneth Allen | CC BY-SA 2.0 (https://creativecommons.org/licenses/by-sa/2.0) | https://commons.wikimedia.org/wiki/File:Country_cottage,_Inch_Island_-_geograph.org.uk_-_3951065_(cropped).jpg
-007 | Cattle | Kim Hansen | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Cow_(Fleckvieh_breed)_Oeschinensee_Slaunger_2009-07-07.jpg
 249 | Dance | Barry Goyette from San Luis Obispo, USA | CC BY 2.0 (https://creativecommons.org/licenses/by/2.0) | https://commons.wikimedia.org/wiki/File:Two_dancers.jpg
 323 | Desert | Nepenthes | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Rub_al_Khali_002.JPG
 221 | Ear | Genusfotografen (Tomas Gunnarsson) / Wikimedia Sverige | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:Human_right_ear_(cropped).jpg
 222 | Human eye | ROTFLOLEB | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Human_eye_with_blood_vessels.jpg
 472 | Farm | Adrian S Pye | CC BY-SA 2.0 (https://creativecommons.org/licenses/by-sa/2.0) | https://commons.wikimedia.org/wiki/File:Church_Farm,_Stockton,_Norfolk_-_geograph.org.uk_-_1968544.jpg
-283 | Goldfish | לינה אבוגוש | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Gold_fish1.jpg
 473 | Flood | johndal | CC BY-SA 2.0 (https://creativecommons.org/licenses/by-sa/2.0) | https://commons.wikimedia.org/wiki/File:Urban_flood_cropped.jpg
 019 | Flower | Ianaré Sévi | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Magnolia_grandiflora_-_flower_1.jpg
 013 | Housefly | USDAgov | CC BY 2.0 (https://creativecommons.org/licenses/by/2.0) | https://commons.wikimedia.org/wiki/File:Common_house_fly,_Musca_domestica.jpg
 224 | Foot | Genusfotografen (Tomas Gunnarsson) / Wikimedia | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:Foot_on_white_background.jpg
 474 | Forest | lubasi | CC BY-SA 2.0 (https://creativecommons.org/licenses/by-sa/2.0) | https://commons.wikimedia.org/wiki/File:Aerial_view_of_the_Amazon_Rainforest.jpg
-011 | European tree frog | Stijn99 | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:European_tree_frog_(Hyla_arborea)_on_hemp-agrimony_(Eupatorium_cannabinum).jpg
 475 | Garden | King of Hearts | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Brooklyn_Botanic_Garden_New_York_May_2015_010.jpg
-308 | Helicopter | Fly45yt | CC BY 4.0 (https://creativecommons.org/licenses/by/4.0) | https://commons.wikimedia.org/wiki/File:VH-SUF_Taking_Off.jpg
 361 | Ice | Sharon Mollerus | CC BY 2.0 (https://creativecommons.org/licenses/by/2.0) | https://commons.wikimedia.org/wiki/File:Ice_Block,_Canal_Park,_Duluth_(32752478892).jpg
 228 | Knee | Genusfotografen (Tomas Gunnarsson) / Wikimedia Sverige | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:Human_knees.jpg
 022 | Leaf | Krzysztof P. Jasiutowicz | CC BY-SA 3.0 (http://creativecommons.org/licenses/by-sa/3.0/) | https://commons.wikimedia.org/wiki/File:Lisc_lipy.jpg
 008 | Lion | Giles Laurent | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:020_The_lion_king_Snyggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg
-314 | Motorcycle | Devanand.j | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:Istockphoto-114285168-612x612.jpg
 476 | Mud | Ildar Sagdejev (Specious) | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:2003-11-27_Northerner_boots_in_mud.jpg
 318 | Mountain | Luca Galuzzi (Lucag) | CC BY-SA 2.5 (https://creativecommons.org/licenses/by-sa/2.5) | https://commons.wikimedia.org/wiki/File:Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg
 477 | Footpath | Haoreima | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:Lush_greenery_of_the_Kangla_Fort_(Kangla_Palace),_the_ancient_capital_of_Kangleipak_%E2%80%94_Early_modern_era_street_lamps_%E2%80%94_Old_Footpath.jpg
@@ -485,9 +471,6 @@ Additional photographs (resized, framed and converted to WebP under the source l
 236 | Tongue | Mahdiabbasinv | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:%D8%B2%D8%A8%D8%A7%D9%86_tongue.jpg
 484 | Railway track | Australian National Railways Commission employee | CC BY 4.0 (https://creativecommons.org/licenses/by/4.0) | https://commons.wikimedia.org/wiki/File:Australian_National_Railways_track_with_concrete_sleepers.jpg
 485 | Tunnel | Marc Mongenet | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:Signalisation_routi%C3%A8re_entr%C3%A9e_sud_tunnel_du_Galibier.jpg
-486 | Tire | Anselm Schüler | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:Large_tyre.jpg
-316 | Van | Vauxford | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:2018_Ford_Transit_Custom_300_Base_2.0_facelift.jpg
-487 | Wheel | Bybbisch94, Christian Gebhardt | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:Landesmuseum_W%C3%BCrttemberg_Kelten_011.4.jpg
 488 | Ocean horizon from fire island pines.jpg | brianga | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:Ocean_horizon_from_fire_island_pines.jpg; cropped and found via Openverse
 
 Reviewed photographs (resized and converted to WebP under their source licences)
@@ -523,7 +506,6 @@ Reviewed photographs (resized and converted to WebP under their source licences)
 
 Reviewed photographs (resized and converted to WebP under their source licences)
 518 | root | ImagePerson | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:White_Cedar_Seedling_Commercial_harvest_Roots_Detail_7345.jpg
-519 | bottle | Aurélien Mole | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/) | https://commons.wikimedia.org/wiki/File:Bouteille.jpg
 520 | album | Vyacheslav Argenberg | CC BY 4.0 (https://creativecommons.org/licenses/by/4.0) | https://commons.wikimedia.org/wiki/File:Black_and_white_photo_album,_Rostov-on-Don,_Russia.jpg
 521 | bag | Johannes Jansson | CC BY 2.5 dk (https://creativecommons.org/licenses/by/2.5/dk/deed.en) | https://commons.wikimedia.org/wiki/File:Nordic_Climate_Solutions_2009-09-09.jpg
 522 | baseball | Own work | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Baseball-2.jpg
@@ -533,22 +515,18 @@ Reviewed photographs (resized and converted to WebP under their source licences)
 526 | carpet | Ryj | Public domain (https://creativecommons.org/publicdomain/mark/1.0/) | https://commons.wikimedia.org/wiki/File:Wollteppich_1.jpg
 527 | coin | Michael Sander | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:Kiloware.JPG
 528 | cup | Vincennes Porcelain (France, circa 1739–1756), Francois Binet (France, active 1750-1775, born 1731) | Public domain (https://creativecommons.org/publicdomain/mark/1.0/) | https://commons.wikimedia.org/wiki/File:Cup_and_Saucer_LACMA_47.35.6a-b_(1_of_3).jpg
-529 | fan | Peachyo | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:Hatari_18_inch_fan.jpg
 530 | frame | Tim Evanson from Cleveland Heights, Ohio, USA | CC BY-SA 2.0 (https://creativecommons.org/licenses/by-sa/2.0) | https://commons.wikimedia.org/wiki/File:Carved_frame_01_(27133614537).jpg
 531 | handle | GFreihalter | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Paris_4e_H%C3%B4tel_Lambert_Heurtoir_313.jpg
 532 | motor | VEM motors GmbH | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:VEM_motor_Wernigerode.png
-533 | needle | Thamizhpparithi Maari | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:A_depiction_of_needle.JPG
 534 | net | Peter Church | CC BY-SA 2.0 (https://creativecommons.org/licenses/by-sa/2.0) | https://commons.wikimedia.org/wiki/File:A_fishing_net_in_Brandon_Creek_-_geograph.org.uk_-_921094.jpg
 535 | powder | Anonimski | CC0 (https://creativecommons.org/publicdomain/zero/1.0/deed.en) | https://commons.wikimedia.org/wiki/File:Iron_powder.JPG
 536 | robot | KUKA Roboter GmbH, Bachmann | Public domain (https://creativecommons.org/publicdomain/mark/1.0/) | https://commons.wikimedia.org/wiki/File:Automation_of_foundry_with_robot.jpg
-537 | rope | Ji-Elle | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Cordage_en_chanvre.jpg
 538 | sand | Luca Galuzzi (Lucag) | CC BY-SA 2.5 (https://creativecommons.org/licenses/by-sa/2.5) | https://commons.wikimedia.org/wiki/File:Libya_4608_Idehan_Ubari_Dunes_Luca_Galuzzi_2007.jpg
 539 | scale | Photographie personnelle User:Poussin jean | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/) | https://commons.wikimedia.org/wiki/File:Balance_%C3%A0_tabac_1850.JPG
 540 | signal | Unisouth | CC BY 3.0 (https://creativecommons.org/licenses/by/3.0) | https://commons.wikimedia.org/wiki/File:Modern_British_LED_Traffic_Light.jpg
 541 | speaker | Svjo | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Electrodynamic-loudspeaker.png
 542 | statue | Dwaisman | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:Hermes_and_the_infant_Dionysus_by_Praxiteles.jpg
 543 | suit | Cliff Donaldson from Belfast, Northern Ireland | CC BY-SA 2.0 (https://creativecommons.org/licenses/by-sa/2.0) | https://commons.wikimedia.org/wiki/File:Matt_Smith_on_%22Christopher_And_His_Kind%22_set.jpg
-544 | sweater | Nils R. Barth | Public domain (https://creativecommons.org/publicdomain/mark/1.0/) | https://commons.wikimedia.org/wiki/File:Selburose-sweater.jpg
 545 | tablet | Dylan240 | CC0 (https://creativecommons.org/publicdomain/zero/1.0/deed.en) | https://commons.wikimedia.org/wiki/File:12.9_iPad_Pro_1st_Gen_And_Galaxy_Tab_S8_Ultra_Size_Comparison.jpg
 546 | toy | Smithsonian Museum of Natural History | CC BY-SA 2.0 (https://creativecommons.org/licenses/by-sa/2.0) | https://commons.wikimedia.org/wiki/File:Teddy_bear_early_1900s_-_Smithsonian_Museum_of_Natural_History.jpg
 547 | tube | Amitchell125 at English Wikipedia | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Two_small_test_tubes_held_in_spring_clamps.jpg
@@ -578,7 +556,6 @@ Reviewed photographs (resized and converted to WebP under their source licences)
 567 | fence | TriviaKing (talk)DWS-Montag Zen | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Classic_Picket_Fence.JPG
 568 | fur | Guillaume Bolduc guibolduc | CC0 (https://creativecommons.org/publicdomain/zero/1.0/deed.en) | https://commons.wikimedia.org/wiki/File:Sherbrooke,_Canada_(Unsplash_S2sWHoVZF8s)_(cut).jpg
 569 | hat | Cullen328 | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:1910_top_hat.jpg
-570 | keyboard | Wilfredor | CC0 (https://creativecommons.org/publicdomain/zero/1.0/deed.en) | https://commons.wikimedia.org/wiki/File:IBM_Model_M_Spanish_Keyboard.jpg
 571 | machine | Greudin at English Wikipedia | Public domain (https://creativecommons.org/publicdomain/mark/1.0/) | https://commons.wikimedia.org/wiki/File:Conventional-lathe.jpg
 572 | portrait | Edward S. Curtis / Adam Cuerden | Public domain (https://creativecommons.org/publicdomain/mark/1.0/) | https://commons.wikimedia.org/wiki/File:Self_portrait_of_Edward_Sheriff_Curtis.jpg
 573 | press | International Printing Museum | CC0 (https://creativecommons.org/publicdomain/zero/1.0/deed.en) | https://commons.wikimedia.org/wiki/File:Gutenberg_press.png
@@ -613,7 +590,6 @@ Reviewed photographs (resized and converted to WebP under their source licences)
 
 Reviewed photographs (resized and converted to WebP under their source licences)
 601 | biscuit | Rdsmith4 | CC BY-SA 2.5 (https://creativecommons.org/licenses/by-sa/2.5) | https://commons.wikimedia.org/wiki/File:Chocolate_chip_cookies.jpg
-602 | oven | M.M.Minderhoud | CC BY-SA 3.0 (http://creativecommons.org/licenses/by-sa/3.0/) | https://commons.wikimedia.org/wiki/File:Oven.jpg
 603 | sugar | Uwe Hermann | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Sugar_cubes.jpg
 604 | flour | Margaret Hoogstrate | CC BY 3.0 (https://creativecommons.org/licenses/by/3.0) | https://commons.wikimedia.org/wiki/File:Whole_wheat_grain_flour_being_scooped.jpg
 605 | vegetable | jorgegdphoto.com | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:Surtido_de_vegetales.jpg
@@ -631,7 +607,6 @@ Reviewed photographs (resized and converted to WebP under their source licences)
 617 | money | Avij (talk · contribs) | Public domain (https://creativecommons.org/publicdomain/mark/1.0/) | https://commons.wikimedia.org/wiki/File:Euro_coins_and_banknotes_(cropped).jpg
 618 | monitor | CEphoto, Uwe Aranas | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:Monitor-Eizo-CG277-BK-27inches-01.jpg
 619 | silver | Unit 5 | CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) | https://commons.wikimedia.org/wiki/File:1000oz.silver.bullion.bar.top.jpg
-620 | switch | Kirschblut at German Wikipedia | Public domain (https://creativecommons.org/publicdomain/mark/1.0/) | https://commons.wikimedia.org/wiki/File:Lichtschalter.jpg
 621 | tool | M338 | Public domain (https://creativecommons.org/publicdomain/mark/1.0/) | https://commons.wikimedia.org/wiki/File:Hand_tools.jpg
 622 | uniform | Kachhna | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | https://commons.wikimedia.org/wiki/File:Khmer_Public_Schools_uniform.jpeg
 623 | gallery | Onasill - Bill Badzo - 149 Million Views - Thank Y | CC BY-SA 2.0 (https://creativecommons.org/licenses/by-sa/2.0/) | https://www.flickr.com/photos/7156765@N05/51374458151
@@ -642,3 +617,375 @@ Reviewed photographs (resized and converted to WebP under their source licences)
 628 | slope | vwcampin | CC BY 2.0 (https://creativecommons.org/licenses/by/2.0/) | https://www.flickr.com/photos/125112383@N06/32718780993
 629 | town | kitmasterbloke | CC BY 2.0 (https://creativecommons.org/licenses/by/2.0/) | https://www.flickr.com/photos/58415659@N00/51370474263
 630 | farming | Martin Pettitt | CC BY 2.0 (https://creativecommons.org/licenses/by/2.0/) | https://www.flickr.com/photos/95012874@N00/52235268277
+
+WordRun clay vocabulary atlas (OpenAI ImageGen, cropped into individual cards)
+063 | Fridge | WordRun original generated illustration
+417 | Pepper | WordRun original generated illustration
+425 | Aircraft | WordRun original generated illustration
+461 | Factory | WordRun original generated illustration
+466 | Sink | WordRun original generated illustration
+317 | Boat | WordRun original generated illustration
+171 | Bus | WordRun original generated illustration
+310 | Car | WordRun original generated illustration
+007 | Cow | WordRun original generated illustration
+283 | Fish | WordRun original generated illustration
+011 | Frog | WordRun original generated illustration
+308 | Helicopter | WordRun original generated illustration
+314 | Motorcycle | WordRun original generated illustration
+316 | Van | WordRun original generated illustration
+486 | Tyre | WordRun original generated illustration
+487 | Wheel | WordRun original generated illustration
+519 | Bottle | WordRun original generated illustration
+529 | Fan | WordRun original generated illustration
+533 | Needle | WordRun original generated illustration
+537 | Rope | WordRun original generated illustration
+544 | Sweater | WordRun original generated illustration
+570 | Keyboard | WordRun original generated illustration
+602 | Oven | WordRun original generated illustration
+620 | Switch | WordRun original generated illustration
+468 | Lake | WordRun original generated illustration
+
+WordRun Oxford clay atlases (OpenAI ImageGen, individualized game tiles)
+631 | father | WordRun original generated illustration
+632 | mother | WordRun original generated illustration
+633 | grandparent | WordRun original generated illustration
+634 | child | WordRun original generated illustration
+635 | teenager | WordRun original generated illustration
+636 | elderly | WordRun original generated illustration
+637 | pregnant | WordRun original generated illustration
+638 | boy | WordRun original generated illustration
+639 | girl | WordRun original generated illustration
+640 | man | WordRun original generated illustration
+641 | woman | WordRun original generated illustration
+642 | couple | WordRun original generated illustration
+643 | friend | WordRun original generated illustration
+644 | team | WordRun original generated illustration
+645 | crowd | WordRun original generated illustration
+646 | audience | WordRun original generated illustration
+647 | student | WordRun original generated illustration
+648 | tourist | WordRun original generated illustration
+649 | traveller | WordRun original generated illustration
+650 | passenger | WordRun original generated illustration
+651 | visitor | WordRun original generated illustration
+652 | guest | WordRun original generated illustration
+653 | actor | WordRun original generated illustration
+654 | actress | WordRun original generated illustration
+655 | architect | WordRun original generated illustration
+656 | engineer | WordRun original generated illustration
+657 | designer | WordRun original generated illustration
+658 | dancer | WordRun original generated illustration
+659 | waiter | WordRun original generated illustration
+660 | painter | WordRun original generated illustration
+661 | journalist | WordRun original generated illustration
+662 | lawyer | WordRun original generated illustration
+663 | judge | WordRun original generated illustration
+664 | detective | WordRun original generated illustration
+665 | officer | WordRun original generated illustration
+666 | priest | WordRun original generated illustration
+667 | queen | WordRun original generated illustration
+668 | king | WordRun original generated illustration
+669 | princess | WordRun original generated illustration
+670 | prince | WordRun original generated illustration
+671 | bride | WordRun original generated illustration
+672 | journal | WordRun original generated illustration
+673 | captain | WordRun original generated illustration
+674 | sailor | WordRun original generated illustration
+675 | athlete | WordRun original generated illustration
+676 | prisoner | WordRun original generated illustration
+677 | happy | WordRun original generated illustration
+678 | sad | WordRun original generated illustration
+679 | angry | WordRun original generated illustration
+680 | afraid | WordRun original generated illustration
+681 | excited | WordRun original generated illustration
+682 | nervous | WordRun original generated illustration
+683 | bored | WordRun original generated illustration
+684 | tired | WordRun original generated illustration
+685 | surprised | WordRun original generated illustration
+686 | proud | WordRun original generated illustration
+687 | embarrassed | WordRun original generated illustration
+688 | confused | WordRun original generated illustration
+689 | relaxed | WordRun original generated illustration
+690 | disappointed | WordRun original generated illustration
+691 | lonely | WordRun original generated illustration
+692 | sick | WordRun original generated illustration
+693 | pain | WordRun original generated illustration
+694 | injury | WordRun original generated illustration
+695 | breathe | WordRun original generated illustration
+696 | wound | WordRun original generated illustration
+697 | virus | WordRun original generated illustration
+698 | vaccine | WordRun original generated illustration
+699 | muscle | WordRun original generated illustration
+700 | document | WordRun original generated illustration
+701 | novel | WordRun original generated illustration
+702 | chapter | WordRun original generated illustration
+703 | page | WordRun original generated illustration
+704 | label | WordRun original generated illustration
+705 | collection | WordRun original generated illustration
+706 | stamp | WordRun original generated illustration
+707 | receipt | WordRun original generated illustration
+708 | article | WordRun original generated illustration
+709 | chart | WordRun original generated illustration
+710 | cash | WordRun original generated illustration
+711 | currency | WordRun original generated illustration
+712 | credit | WordRun original generated illustration
+713 | prize | WordRun original generated illustration
+714 | gift | WordRun original generated illustration
+715 | tv | WordRun original generated illustration
+716 | phone | WordRun original generated illustration
+717 | recording | WordRun original generated illustration
+718 | video | WordRun original generated illustration
+719 | planet | WordRun original generated illustration
+720 | universe | WordRun original generated illustration
+721 | cell | WordRun original generated illustration
+722 | nuclear | WordRun original generated illustration
+723 | chemical | WordRun original generated illustration
+724 | cinema | WordRun original generated illustration
+725 | university | WordRun original generated illustration
+726 | lab | WordRun original generated illustration
+727 | prison | WordRun original generated illustration
+728 | pub | WordRun original generated illustration
+729 | mall | WordRun original generated illustration
+730 | court | WordRun original generated illustration
+731 | campus | WordRun original generated illustration
+732 | resort | WordRun original generated illustration
+733 | border | WordRun original generated illustration
+734 | railway | WordRun original generated illustration
+735 | route | WordRun original generated illustration
+736 | destination | WordRun original generated illustration
+737 | journey | WordRun original generated illustration
+738 | airline | WordRun original generated illustration
+739 | flight | WordRun original generated illustration
+740 | underground | WordRun original generated illustration
+741 | transport | WordRun original generated illustration
+742 | country | WordRun original generated illustration
+743 | continent | WordRun original generated illustration
+744 | district | WordRun original generated illustration
+745 | region | WordRun original generated illustration
+746 | sleep | WordRun original generated illustration
+747 | wake | WordRun original generated illustration
+748 | listen | WordRun original generated illustration
+749 | speak | WordRun original generated illustration
+750 | laugh | WordRun original generated illustration
+751 | kiss | WordRun original generated illustration
+752 | kick | WordRun original generated illustration
+753 | throw | WordRun original generated illustration
+754 | reach | WordRun original generated illustration
+755 | fall | WordRun original generated illustration
+756 | enter | WordRun original generated illustration
+757 | arrive | WordRun original generated illustration
+758 | leave | WordRun original generated illustration
+759 | follow | WordRun original generated illustration
+760 | wait | WordRun original generated illustration
+761 | pick | WordRun original generated illustration
+762 | feed | WordRun original generated illustration
+763 | wash | WordRun original generated illustration
+764 | fix | WordRun original generated illustration
+765 | repair | WordRun original generated illustration
+766 | fold | WordRun original generated illustration
+767 | mix | WordRun original generated illustration
+768 | fill | WordRun original generated illustration
+769 | freeze | WordRun original generated illustration
+770 | tidy | WordRun original generated illustration
+771 | buy | WordRun original generated illustration
+772 | pay | WordRun original generated illustration
+773 | donate | WordRun original generated illustration
+774 | steal | WordRun original generated illustration
+775 | share | WordRun original generated illustration
+776 | greet | WordRun original generated illustration
+777 | invite | WordRun original generated illustration
+778 | birthday | WordRun original generated illustration
+779 | wedding | WordRun original generated illustration
+780 | festival | WordRun original generated illustration
+781 | celebration | WordRun original generated illustration
+782 | concert | WordRun original generated illustration
+783 | race | WordRun original generated illustration
+784 | victory | WordRun original generated illustration
+785 | reward | WordRun original generated illustration
+786 | interview | WordRun original generated illustration
+787 | meeting | WordRun original generated illustration
+788 | conversation | WordRun original generated illustration
+789 | argument | WordRun original generated illustration
+790 | lecture | WordRun original generated illustration
+791 | presentation | WordRun original generated illustration
+792 | cloth | WordRun original generated illustration
+793 | leather | WordRun original generated illustration
+794 | silk | WordRun original generated illustration
+795 | steel | WordRun original generated illustration
+796 | wooden | WordRun original generated illustration
+797 | liquid | WordRun original generated illustration
+798 | solid | WordRun original generated illustration
+799 | gas | WordRun original generated illustration
+800 | metal | WordRun original generated illustration
+801 | material | WordRun original generated illustration
+802 | package | WordRun original generated illustration
+803 | container | WordRun original generated illustration
+804 | layer | WordRun original generated illustration
+805 | bunch | WordRun original generated illustration
+806 | pile | WordRun original generated illustration
+807 | angle | WordRun original generated illustration
+808 | curve | WordRun original generated illustration
+809 | shape | WordRun original generated illustration
+810 | edge | WordRun original generated illustration
+811 | corner | WordRun original generated illustration
+812 | gap | WordRun original generated illustration
+813 | hole | WordRun original generated illustration
+814 | outline | WordRun original generated illustration
+815 | surface | WordRun original generated illustration
+816 | panel | WordRun original generated illustration
+817 | nature | WordRun original generated illustration
+818 | land | WordRun original generated illustration
+819 | environment | WordRun original generated illustration
+820 | world | WordRun original generated illustration
+821 | sea | WordRun original generated illustration
+822 | sunny | WordRun original generated illustration
+823 | warm | WordRun original generated illustration
+824 | cold | WordRun original generated illustration
+825 | dark | WordRun original generated illustration
+826 | weather | WordRun original generated illustration
+827 | earthquake | WordRun original generated illustration
+828 | pollution | WordRun original generated illustration
+829 | wildlife | WordRun original generated illustration
+830 | creature | WordRun original generated illustration
+831 | bacteria | WordRun original generated illustration
+832 | growth | WordRun original generated illustration
+833 | pet | WordRun original generated illustration
+834 | tail | WordRun original generated illustration
+835 | hunting | WordRun original generated illustration
+836 | flow | WordRun original generated illustration
+837 | shade | WordRun original generated illustration
+838 | meal | WordRun original generated illustration
+839 | ingredient | WordRun original generated illustration
+840 | sauce | WordRun original generated illustration
+841 | raw | WordRun original generated illustration
+842 | frozen | WordRun original generated illustration
+843 | nut | WordRun original generated illustration
+844 | quarter | WordRun original generated illustration
+845 | delicious | WordRun original generated illustration
+846 | consume | WordRun original generated illustration
+847 | preserve | WordRun original generated illustration
+848 | cover | WordRun original generated illustration
+849 | sheet | WordRun original generated illustration
+850 | equipment | WordRun original generated illustration
+851 | shelf | WordRun original generated illustration
+852 | case | WordRun original generated illustration
+853 | sample | WordRun original generated illustration
+854 | substance | WordRun original generated illustration
+855 | fuel | WordRun original generated illustration
+856 | painting | WordRun original generated illustration
+857 | drawing | WordRun original generated illustration
+858 | photo | WordRun original generated illustration
+859 | cartoon | WordRun original generated illustration
+860 | diagram | WordRun original generated illustration
+861 | image | WordRun original generated illustration
+862 | illustration | WordRun original generated illustration
+863 | art | WordRun original generated illustration
+864 | design | WordRun original generated illustration
+865 | edition | WordRun original generated illustration
+866 | film | WordRun original generated illustration
+867 | movie | WordRun original generated illustration
+868 | script | WordRun original generated illustration
+869 | podcast | WordRun original generated illustration
+870 | broadcast | WordRun original generated illustration
+871 | app | WordRun original generated illustration
+872 | website | WordRun original generated illustration
+873 | internet | WordRun original generated illustration
+874 | network | WordRun original generated illustration
+875 | audio | WordRun original generated illustration
+876 | electricity | WordRun original generated illustration
+877 | power | WordRun original generated illustration
+878 | electronic | WordRun original generated illustration
+879 | component | WordRun original generated illustration
+880 | alone | WordRun original generated illustration
+881 | crowded | WordRun original generated illustration
+882 | asleep | WordRun original generated illustration
+883 | ready | WordRun original generated illustration
+884 | lost | WordRun original generated illustration
+885 | clean | WordRun original generated illustration
+886 | mess | WordRun original generated illustration
+887 | damage | WordRun original generated illustration
+888 | covered | WordRun original generated illustration
+889 | new | WordRun original generated illustration
+890 | huge | WordRun original generated illustration
+891 | tiny | WordRun original generated illustration
+892 | wide | WordRun original generated illustration
+893 | narrow | WordRun original generated illustration
+894 | loose | WordRun original generated illustration
+895 | tight | WordRun original generated illustration
+896 | flexible | WordRun original generated illustration
+897 | bent | WordRun original generated illustration
+898 | light | WordRun original generated illustration
+899 | weight | WordRun original generated illustration
+900 | length | WordRun original generated illustration
+901 | distance | WordRun original generated illustration
+902 | height | WordRun original generated illustration
+903 | grey | WordRun original generated illustration
+904 | colour | WordRun original generated illustration
+905 | pale | WordRun original generated illustration
+906 | fancy | WordRun original generated illustration
+907 | indoors | WordRun original generated illustration
+908 | outdoors | WordRun original generated illustration
+909 | urban | WordRun original generated illustration
+910 | rural | WordRun original generated illustration
+911 | historic | WordRun original generated illustration
+912 | property | WordRun original generated illustration
+913 | location | WordRun original generated illustration
+914 | view | WordRun original generated illustration
+915 | front | WordRun original generated illustration
+916 | side | WordRun original generated illustration
+917 | inside | WordRun original generated illustration
+918 | under | WordRun original generated illustration
+919 | against | WordRun original generated illustration
+920 | along | WordRun original generated illustration
+921 | apart | WordRun original generated illustration
+922 | downstairs | WordRun original generated illustration
+923 | upstairs | WordRun original generated illustration
+924 | north | WordRun original generated illustration
+925 | east | WordRun original generated illustration
+926 | west | WordRun original generated illustration
+927 | homework | WordRun original generated illustration
+928 | exam | WordRun original generated illustration
+929 | lesson | WordRun original generated illustration
+930 | teaching | WordRun original generated illustration
+931 | research | WordRun original generated illustration
+932 | practice | WordRun original generated illustration
+933 | training | WordRun original generated illustration
+934 | guide | WordRun original generated illustration
+935 | pupil | WordRun original generated illustration
+936 | worker | WordRun original generated illustration
+937 | businessman | WordRun original generated illustration
+938 | manager | WordRun original generated illustration
+939 | customer | WordRun original generated illustration
+940 | colleague | WordRun original generated illustration
+941 | volunteer | WordRun original generated illustration
+942 | charity | WordRun original generated illustration
+943 | community | WordRun original generated illustration
+944 | protest | WordRun original generated illustration
+945 | emergency | WordRun original generated illustration
+946 | rescue | WordRun original generated illustration
+947 | arrest | WordRun original generated illustration
+948 | warning | WordRun original generated illustration
+949 | danger | WordRun original generated illustration
+950 | toe | WordRun original generated illustration
+951 | organ | WordRun original generated illustration
+952 | lung | WordRun original generated illustration
+953 | breath | WordRun original generated illustration
+954 | nerve | WordRun original generated illustration
+955 | hearing | WordRun original generated illustration
+956 | invitation | WordRun original generated illustration
+957 | reception | WordRun original generated illustration
+958 | sail | WordRun original generated illustration
+959 | licence | WordRun original generated illustration
+960 | ghost | WordRun original generated illustration
+961 | giant | WordRun original generated illustration
+962 | hero | WordRun original generated illustration
+963 | award | WordRun original generated illustration
+964 | clue | WordRun original generated illustration
+965 | draft | WordRun original generated illustration
+966 | notice | WordRun original generated illustration
+967 | decoration | WordRun original generated illustration
+968 | print | WordRun original generated illustration
+969 | recycle | WordRun original generated illustration
+970 | collapse | WordRun original generated illustration
+971 | nightmare | WordRun original generated illustration
+972 | magic | WordRun original generated illustration
+973 | countryside | WordRun original generated illustration
