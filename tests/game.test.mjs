@@ -156,6 +156,11 @@ test('new Oxford picture cards are unique and hard decks always use a close pict
 test('number and Thai clues replace their images without exposing the correct option', async () => {
   const { vocabulary } = await import('../src/game/vocabulary.ts');
   const { publicQuestion } = await import('../src/game/rules.ts');
+  const { textClueFor } = await import('../src/game/text-clues.ts');
+  const positionTopics = new Set(['motion direction', 'spatial relations', 'spatial scenes', 'directions']);
+  for (const entry of vocabulary.filter(word => positionTopics.has(word.topic))) {
+    assert.equal(textClueFor(entry.word)?.kind, 'thai', entry.word);
+  }
   const deck = ['normal', 'hard'].flatMap(difficulty =>
     buildDeck({ category: 'all', difficulty, hearts: 3 }, vocabulary.length));
   const cardFor = (word) => deck.find(question => question.options[question.correct] === word);
@@ -165,6 +170,9 @@ test('number and Thai clues replace their images without exposing the correct op
     ['Quarter', { kind: 'number', value: '¼' }],
     ['Confused', { kind: 'thai', value: 'รู้สึกสับสน' }],
     ['Length', { kind: 'thai', value: 'ความยาว' }],
+    ['Across', { kind: 'thai', value: 'ข้ามจากด้านหนึ่งไปอีกด้าน' }],
+    ['Down', { kind: 'thai', value: 'เคลื่อนลงด้านล่าง' }],
+    ['Through', { kind: 'thai', value: 'ผ่านเข้าไปแล้วออกอีกด้าน' }],
   ]) {
     const question = cardFor(word);
     assert.ok(question, word);
